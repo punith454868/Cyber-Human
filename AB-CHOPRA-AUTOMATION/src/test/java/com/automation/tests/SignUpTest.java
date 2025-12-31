@@ -21,6 +21,7 @@ public class SignUpTest extends BaseTest {
         SignUpPage signUpPage = new SignUpPage(driver);
         if (signUpPage.isSignUpPageDisplayed()) {
             test.log(Status.INFO, "Already on Sign Up Page");
+            Assert.assertTrue(signUpPage.isSignUpPageDisplayed(), "FATAL: Sign Up Page NOT displayed!");
             return;
         }
 
@@ -30,6 +31,8 @@ public class SignUpTest extends BaseTest {
             signInPage.clickSignUp();
             test.log(Status.INFO, "Navigated to Sign Up page from Sign In");
             Thread.sleep(2000);
+            Assert.assertTrue(signUpPage.isSignUpPageDisplayed(),
+                    "FATAL: Sign Up Page NOT displayed after clicking Sign Up!");
             return;
         }
 
@@ -57,6 +60,8 @@ public class SignUpTest extends BaseTest {
                 signInPage.clickSignUp();
                 test.log(Status.INFO, "Navigated to Sign Up page after Logout");
                 Thread.sleep(2000);
+                Assert.assertTrue(signUpPage.isSignUpPageDisplayed(),
+                        "FATAL: Sign Up Page NOT displayed after Logout!");
                 return;
             }
         }
@@ -83,17 +88,17 @@ public class SignUpTest extends BaseTest {
     public Object[][] getNegativeSignUpData() {
         return new Object[][] {
                 // Scenario, Name, Email, Password, Confirm Password
-                { "Invalid Email Format", "John Doe", "invalidemail", "Password@123", "Password@123" },
-                { "Empty Name Field", "", "test@example.com", "Password@123", "Password@123" },
-                { "Empty Email Field", "John Doe", "", "Password@123", "Password@123" },
-                { "Empty Password Field", "John Doe", "test@example.com", "", "Password@123" },
-                { "Empty Confirm Password", "John Doe", "test@example.com", "Password@123", "" },
-                { "Password Mismatch", "John Doe", "test@example.com", "Password@123", "DifferentPass@123" },
-                { "Weak Password", "John Doe", "test@example.com", "123", "123" },
-                { "All Fields Empty", "", "", "", "" },
-                { "Email Without Domain", "John Doe", "test@", "Password@123", "Password@123" },
-                { "Short Password", "John Doe", "test@example.com", "12", "12" },
-                { "Only Spaces in Name", "   ", "test@example.com", "Password@123", "Password@123" },
+                { "Invalid Email Format", "John Doe", "invalidemail", "Password@123", "Password@123" }, // 1
+                { "Empty Name Field", "", "test@example.com", "Password@123", "Password@123" }, // 2
+                { "Empty Email Field", "John Doe", "", "Password@123", "Password@123" }, // 3
+                { "Empty Password Field", "John Doe", "test@example.com", "", "Password@123" }, // 4
+                { "Empty Confirm Password", "John Doe", "test@example.com", "Password@123", "" }, // 5
+                { "Password Mismatch", "John Doe", "test@example.com", "Password@123", "DifferentPass@123" }, // 6
+                { "Weak Password", "John Doe", "test@example.com", "123", "123" }, // 7
+                { "All Fields Empty", "", "", "", "" }, // 8
+                { "Email Without Domain", "John Doe", "test@", "Password@123", "Password@123" }, // 9
+                { "Short Password", "John Doe", "test@example.com", "12", "12" }, // 10
+                { "Only Spaces in Name", "   ", "test@example.com", "Password@123", "Password@123" }, // 11
         };
     }
 
@@ -220,6 +225,14 @@ public class SignUpTest extends BaseTest {
         test.log(Status.INFO, "Clicked Continue button");
 
         Thread.sleep(2000); // Wait for validation/navigation
+
+        // Check for Consent Page (Success State)
+        if (signUpPage.isConsentPageDisplayed()) {
+            // ✅ PASS: Consent Page displayed - Sign up successful
+            test.log(Status.PASS, "✓ Consent Page displayed - Sign up successful");
+            test.log(Status.PASS, "Test PASSED: Valid credentials accepted");
+            return;
+        }
 
         // For positive case, we expect NO validation errors
         boolean validationDetected = signUpPage.isAnyValidationVisible();

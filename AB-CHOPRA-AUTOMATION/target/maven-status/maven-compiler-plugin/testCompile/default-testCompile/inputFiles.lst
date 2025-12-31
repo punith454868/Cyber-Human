@@ -2,6 +2,7 @@
 /home/ds/Cyber-Human/AB-CHOPRA-AUTOMATION/src/test/java/com/automation/tests/SignUpTest.java
 /home/ds/Cyber-Human/AB-CHOPRA-AUTOMATION/src/test/java/com/automation/pages/EditProfilePage.java
 /home/ds/Cyber-Human/AB-CHOPRA-AUTOMATION/src/test/java/com/automation/tests/AbChopraHouseTest.java
+/home/ds/Cyber-Human/AB-CHOPRA-AUTOMATION/src/test/java/com/automation/utils/ConfigReader.java
 /home/ds/Cyber-Human/AB-CHOPRA-AUTOMATION/src/test/java/com/automation/pages/AbChopraHousePage.java
 /home/ds/Cyber-Human/AB-CHOPRA-AUTOMATION/src/test/java/com/automation/tests/SignInTest.java
 /home/ds/Cyber-Human/AB-CHOPRA-AUTOMATION/src/test/java/com/automation/pages/HomePage.java

@@ -57,7 +57,9 @@ public class SignUpPage {
         WebElement el = findElementWithFallback(null, nameFieldXpath, null);
         el.click();
         el.clear();
-        el.sendKeys(name);
+        if (name != null && !name.isEmpty()) {
+            el.sendKeys(name);
+        }
     }
 
     /**
@@ -67,7 +69,9 @@ public class SignUpPage {
         WebElement el = findElementWithFallback(null, emailFieldXpath, null);
         el.click();
         el.clear();
-        el.sendKeys(email);
+        if (email != null && !email.isEmpty()) {
+            el.sendKeys(email);
+        }
     }
 
     /**
@@ -85,7 +89,9 @@ public class SignUpPage {
         WebElement el = findElementWithFallback(null, passwordFieldXpath, null);
         el.click();
         el.clear();
-        el.sendKeys(password);
+        if (password != null && !password.isEmpty()) {
+            el.sendKeys(password);
+        }
     }
 
     /**
@@ -95,7 +101,9 @@ public class SignUpPage {
         WebElement el = findElementWithFallback(null, confirmPasswordFieldXpath, null);
         el.click();
         el.clear();
-        el.sendKeys(confirmPassword);
+        if (confirmPassword != null && !confirmPassword.isEmpty()) {
+            el.sendKeys(confirmPassword);
+        }
     }
 
     /**
@@ -417,6 +425,20 @@ public class SignUpPage {
             // Check for SIGN UP heading
             WebElement heading = findElementWithFallback(null, "//android.view.View[@content-desc='SIGN UP']", null);
             return heading.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Check if Consent Page is displayed (successful sign up)
+     */
+    public boolean isConsentPageDisplayed() {
+        try {
+            WebElement consentElement = findElementWithFallback(null,
+                    "//android.view.View[@content-desc='I accept the terms and conditions of AB Chopra services']",
+                    "I accept the terms and conditions of AB Chopra services");
+            return consentElement.isDisplayed();
         } catch (Exception e) {
             return false;
         }

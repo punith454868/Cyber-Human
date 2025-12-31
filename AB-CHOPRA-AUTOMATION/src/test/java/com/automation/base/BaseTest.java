@@ -19,6 +19,7 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import com.automation.utils.ConfigReader;
 
 public class BaseTest {
 
@@ -46,10 +47,10 @@ public class BaseTest {
     public void setup(java.lang.reflect.Method method) throws MalformedURLException {
 
         UiAutomator2Options options = new UiAutomator2Options();
-        options.setDeviceName("1dc3d76f");
-        options.setAutomationName("UiAutomator2");
-        options.setAppPackage("com.houseofepigenetics.abchopra");
-        options.setAppActivity(".MainActivity");
+        options.setDeviceName(ConfigReader.getProperty("deviceName"));
+        options.setAutomationName(ConfigReader.getProperty("automationName"));
+        options.setAppPackage(ConfigReader.getProperty("appPackage"));
+        options.setAppActivity(ConfigReader.getProperty("appActivity"));
         options.setNoReset(true); // Keep login state
 
         // Stability capabilities for Android 15
@@ -57,14 +58,17 @@ public class BaseTest {
         options.setCapability("appium:skipUnlock", true);
         options.setCapability("appium:ignoreHiddenApiPolicyError", true);
         options.setCapability("appium:noSign", true);
-        options.setNewCommandTimeout(Duration.ofSeconds(300));
 
-        driver = new AndroidDriver(
-                new URL("http://127.0.0.1:4723"), options);
+        int newCommandTimeout = Integer.parseInt(ConfigReader.getProperty("newCommandTimeout"));
+        options.setNewCommandTimeout(Duration.ofSeconds(newCommandTimeout));
 
+        String appiumUrl = ConfigReader.getProperty("appiumUrl");
+        driver = new AndroidDriver(new URL(appiumUrl), options);
+
+        int implicitWait = Integer.parseInt(ConfigReader.getProperty("implicitWait"));
         driver.manage()
                 .timeouts()
-                .implicitlyWait(Duration.ofSeconds(6));
+                .implicitlyWait(Duration.ofSeconds(implicitWait));
 
         // ✅ CONDITIONAL RESET: Skip resetAppToHomePage for tests with custom navigation
         // EditProfileTest: manages Sign In -> Home -> Edit Profile flow
@@ -73,7 +77,7 @@ public class BaseTest {
         String testClassName = method.getDeclaringClass().getSimpleName();
         if (!"EditProfileTest".equals(testClassName) &&
                 !"SignInTest".equals(testClassName) &&
-                !"SignUpTest".equals(testClassName)) {
+                !"SignInTest".equals(testClassName)) {
             // ✅ RESET APP STATE: Navigate to Home page before each test
             // This ensures test independence without requiring re-login
             resetAppToHomePage();
@@ -88,7 +92,7 @@ public class BaseTest {
      */
     private void resetAppToHomePage() {
         try {
-            String appPackage = "com.houseofepigenetics.abchopra";
+            String appPackage = ConfigReader.getProperty("appPackage");
             // Terminate and Activate ensures a fresh start of the main activity
             ((AndroidDriver) driver).terminateApp(appPackage);
             Thread.sleep(500);
@@ -126,7 +130,7 @@ public class BaseTest {
         if (driver != null) {
             try {
                 ((AndroidDriver) driver)
-                        .terminateApp("com.houseofepigenetics.abchopra");
+                        .terminateApp(ConfigReader.getProperty("appPackage"));
             } catch (Exception ignored) {
             }
             driver.quit();
