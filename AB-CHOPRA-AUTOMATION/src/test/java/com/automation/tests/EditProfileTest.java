@@ -29,6 +29,29 @@ public class EditProfileTest extends BaseTest {
         };
     }
 
+    /**
+     * ✅ TEST DATA FOR CHANGE PASSWORD
+     * Scenarios: Wrong Old Pass, Weak Pass, Same Pass, Valid Change
+     */
+    @DataProvider(name = "changePasswordData")
+    public Object[][] getChangePasswordData() {
+        // "loginPassword" is assumed to be "Ramesh@2025" based on
+        // navigateToEditProfileFirstTime
+        String currentLoginPass = "Testing@2026";
+
+        return new Object[][] {
+                // Scenario, Current Pass, New Pass, Confirm Pass, Expected Error XPath (or
+                // "SUCCESS")
+                { "Wrong Old Password Validation", "Testing@2025", "Testing@2026", "Testing@2026",
+                        "//android.view.View[@content-desc='Wrong password. Please enter correct password']" },
+                { "Weak Password Validation", currentLoginPass, "test2026", "test2026",
+                        "//android.view.View[@content-desc='Use at least 8 characters with uppercase, lowercase, number, and special symbol.']" },
+                { "Same Old and New Password Validation", currentLoginPass, currentLoginPass, currentLoginPass,
+                        "//android.view.View[@content-desc='Current and new password cannot be the same.']" },
+                { "Valid Change Password", currentLoginPass, "Human@2026", "Human@2026", "SUCCESS" }
+        };
+    }
+
     // Track if we've already done the initial login flow
     private static boolean isLoggedIn = false;
 
@@ -39,8 +62,8 @@ public class EditProfileTest extends BaseTest {
     private void navigateToEditProfileFirstTime() throws InterruptedException {
         // Step 1: Sign In with valid credentials
         SignInPage signInPage = new SignInPage(driver);
-        signInPage.enterEmail("ramesh@navadhiti.com");
-        signInPage.enterPassword("Ramesh@2025");
+        signInPage.enterEmail("kathirmskgt@gmail.com");
+        signInPage.enterPassword("Testing@2026");
         signInPage.clickContinue();
         test.log(Status.INFO, "Signed in with valid credentials");
         Thread.sleep(2000); // Wait for login
@@ -150,6 +173,148 @@ public class EditProfileTest extends BaseTest {
         } else {
             // Subsequent tests - start from homepage
             navigateToEditProfileFromHome();
+        }
+    }
+
+    /**
+     * ✅ NAVIGATE TO CHANGE PASSWORD PAGE
+     * Ensures we are on the Change Password page, navigating from Edit Profile if
+     * needed.
+     */
+    private void navigateToChangePassword() throws InterruptedException {
+        // First check if we are already on Change Password Page
+        ChangePasswordPage changePasswordPage = new ChangePasswordPage(driver);
+        if (changePasswordPage.isChangePasswordPageDisplayed()) {
+            test.log(Status.INFO, "Already on Change Password Page");
+            return;
+        }
+
+        // Step 4: Navigate to Homepage and click Wellbeing Dashboard
+        HomePage homePage = new HomePage(driver);
+        if (homePage.isHomePageDisplayed()) {
+            homePage.clickWellbeingDashboard();
+            test.log(Status.INFO, "Clicked Wellbeing Dashboard menu");
+            Thread.sleep(2000);
+
+            // Step 4.1: Click PROFILE
+            homePage.clickProfile();
+            test.log(Status.INFO, "Clicked PROFILE button");
+            Thread.sleep(2000);
+        }
+
+        // Step 5: Check if Profile page displayed and wait for it to load
+        ProfilePage profilePage = new ProfilePage(driver);
+        if (profilePage.isProfilePageDisplayed()) {
+            test.log(Status.INFO, "Profile page displayed successfully");
+            Thread.sleep(1000); // Additional wait for page elements to be fully loaded
+        } else {
+            test.log(Status.WARNING, "Profile page not detected, attempting to continue anyway");
+        }
+
+        // Step 6: Click ACCOUNT to navigate to Edit Profile
+        profilePage.clickAccount();
+        test.log(Status.INFO, "Clicked ACCOUNT button");
+        Thread.sleep(2000);
+
+        // Verify Edit Profile page is displayed
+        EditProfilePage editProfilePage = new EditProfilePage(driver);
+        if (editProfilePage.isEditProfilePageDisplayed()) {
+            test.log(Status.INFO, "Edit Profile page displayed successfully");
+        }
+
+        // Click Change Password button
+        editProfilePage.clickChangePassword();
+        test.log(Status.INFO, "Clicked Change Password button");
+        Thread.sleep(2000);
+
+        if (changePasswordPage.isChangePasswordPageDisplayed()) {
+            test.log(Status.INFO, "Change Password page displayed");
+        }
+    }
+
+    /**
+     * ✅ TEST CHANGE PASSWORD SCENARIOS
+     * Covers Negative (Wrong, Weak, Same) and Positive (Success) scenarios
+     */
+    @Test(dataProvider = "changePasswordData", priority = 1)
+    public void testChangePassword(String scenario, String currentPass, String newPass, String confirmPass,
+            String expectedResult) throws InterruptedException {
+        test = extent.createTest("Change Password: " + scenario);
+        test.log(Status.INFO, "Scenario: " + scenario);
+
+        try {
+            // 1. Navigate to Change Password Page
+            navigateToChangePassword();
+            ChangePasswordPage changePasswordPage = new ChangePasswordPage(driver);
+
+            // 2. Enter Password Fields (Step 4 Common Action)
+            changePasswordPage.enterCurrentPassword(currentPass);
+            test.log(Status.INFO, "Entered Current Password");
+
+            changePasswordPage.enterNewPassword(newPass);
+            test.log(Status.INFO, "Entered New Password");
+
+            changePasswordPage.enterConfirmPassword(confirmPass);
+            test.log(Status.INFO, "Entered Confirm Password");
+
+            // 3. Click Change Password Button
+            changePasswordPage.clickChangePasswordButton();
+            test.log(Status.INFO, "Clicked Change Password Button");
+            Thread.sleep(2000);
+
+            // 4. Verify Result
+            if (expectedResult.equals("SUCCESS")) {
+                // Positive Scenario
+                if (changePasswordPage.isSuccessDialogDisplayed()) {
+                    test.log(Status.PASS, "Success Dialog Displayed");
+
+                    String successMsg = changePasswordPage.getSuccessMessage();
+                    if (successMsg != null) {
+                        test.log(Status.INFO, "Success Message: " + successMsg);
+                    } else {
+                        test.log(Status.WARNING, "Could not capture Success Message text");
+                    }
+
+                    changePasswordPage.clickOkButton();
+                    test.log(Status.INFO, "Clicked OK Button");
+                    Thread.sleep(1000);
+
+                } else {
+                    test.log(Status.FAIL, "Success Dialog NOT Displayed");
+                    Assert.fail("Expected Success Dialog was not displayed.");
+                }
+            } else {
+                // Negative Scenarios
+                String actualError = changePasswordPage.getValidationErrorMessage(expectedResult);
+                if (actualError != null) {
+                    test.log(Status.PASS, "✓ Error validated: " + actualError);
+                } else {
+                    test.log(Status.FAIL, "✗ Expected error not found or mismatch");
+                    test.log(Status.INFO, "Expected Xpath: " + expectedResult);
+                    Assert.fail("Expected error validation not found: " + expectedResult);
+                }
+            }
+        } finally {
+            // CRITICAL: Navigate back to home page for next test iteration
+            // This ensures each test starts from a clean state
+            try {
+                test.log(Status.INFO, "Navigating back to Home Page for next iteration");
+
+                // Press back multiple times to reach home page
+                for (int i = 0; i < 5; i++) {
+                    driver.navigate().back();
+                    Thread.sleep(500);
+
+                    // Check if we reached home page
+                    HomePage homePage = new HomePage(driver);
+                    if (homePage.isHomePageDisplayed()) {
+                        test.log(Status.INFO, "Successfully navigated back to Home Page");
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                test.log(Status.WARNING, "Could not navigate back to Home Page: " + e.getMessage());
+            }
         }
     }
 

@@ -8,6 +8,7 @@
 /home/ds/Cyber-Human/AB-CHOPRA-AUTOMATION/src/test/java/com/automation/pages/HomePage.java
 /home/ds/Cyber-Human/AB-CHOPRA-AUTOMATION/src/test/java/com/automation/tests/DataBankTest.java
 /home/ds/Cyber-Human/AB-CHOPRA-AUTOMATION/src/test/java/com/automation/tests/ProfileTest.java
+/home/ds/Cyber-Human/AB-CHOPRA-AUTOMATION/src/test/java/com/automation/pages/ChangePasswordPage.java
 /home/ds/Cyber-Human/AB-CHOPRA-AUTOMATION/src/test/java/com/automation/utils/ProfileNavigationHelper.java
 /home/ds/Cyber-Human/AB-CHOPRA-AUTOMATION/src/test/java/com/automation/pages/SignInPage.java
 /home/ds/Cyber-Human/AB-CHOPRA-AUTOMATION/src/test/java/com/automation/pages/DailyPrescriptionPage.java
