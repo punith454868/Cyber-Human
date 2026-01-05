@@ -65,6 +65,22 @@ public class DataBankPage {
     private final String packagesAndPricingPageXpath = "//android.view.View[@content-desc=\"PACKAGES & PRICING\"]";
     private final String backButtonXpath = "//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.ImageView";
 
+    // Test Case 4 - Priority Filter Steps (New Steps 6-13)
+    private final String highPriorityButtonXpath = "//android.view.View[@content-desc=\"HIGH PRIORITY\"]";
+    private final String mediumPriorityButtonXpath = "//android.view.View[@content-desc=\"MEDIUM PRIORITY\"]";
+    private final String lowPriorityButtonXpath = "//android.view.View[@content-desc=\"LOW PRIORITY\"]";
+    private final String renalDropdownXpath = "//android.widget.ImageView[@content-desc=\"RENAL\"]";
+    // XPath for verification (using contains() to handle newline characters)
+    private final String creatinineHighPriorityXpath = "//android.widget.ImageView[contains(@content-desc, 'Creatinine') and contains(@content-desc, 'High Priority')]";
+    private final String bunMediumPriorityXpath = "//android.widget.ImageView[contains(@content-desc, 'Bun') and contains(@content-desc, 'Medium Priority') and not(contains(@content-desc, 'creatinine'))]";
+    private final String bunCreatinineLowPriorityXpath = "//android.widget.ImageView[contains(@content-desc, 'Bun/creatinine') and contains(@content-desc, 'Low Priority')]";
+    private final String egfrMediumPriorityXpath = "//android.widget.ImageView[contains(@content-desc, 'Egfr') and contains(@content-desc, 'Medium Priority')]";
+    // XPath for second click in step 12 (simpler - just the name)
+    private final String bunSimpleXpath = "//android.widget.ImageView[@content-desc=\"Bun\"]";
+    private final String creatinineSimpleXpath = "//android.widget.ImageView[@content-desc=\"Creatinine\"]";
+    private final String bunCreatinineSimpleXpath = "//android.widget.ImageView[@content-desc=\"Bun/creatinine\"]";
+    private final String egfrSimpleXpath = "//android.widget.ImageView[@content-desc=\"Egfr\"]";
+
     // ==================== COMMON STEP 3 ====================
 
     /**
@@ -864,6 +880,259 @@ public class DataBankPage {
             throw new RuntimeException("Thread interrupted during back button clicks", e);
         } catch (TimeoutException e) {
             throw new RuntimeException("Failed to click back button twice", e);
+        }
+    }
+
+    /**
+     * TEST CASE 4 - NEW STEP 6:
+     * Click HIGH PRIORITY filter button
+     */
+    public void clickHighPriority() {
+        try {
+            WebElement highPriority = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(highPriorityButtonXpath)));
+            highPriority.click();
+            System.out.println("✓ Clicked 'HIGH PRIORITY' filter");
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to click HIGH PRIORITY filter", e);
+        }
+    }
+
+    /**
+     * TEST CASE 4 - NEW STEP 6:
+     * Click MEDIUM PRIORITY filter button
+     */
+    public void clickMediumPriority() {
+        try {
+            WebElement mediumPriority = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(mediumPriorityButtonXpath)));
+            mediumPriority.click();
+            System.out.println("✓ Clicked 'MEDIUM PRIORITY' filter");
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to click MEDIUM PRIORITY filter", e);
+        }
+    }
+
+    /**
+     * TEST CASE 4 - NEW STEP 6:
+     * Click LOW PRIORITY filter button
+     */
+    public void clickLowPriority() {
+        try {
+            WebElement lowPriority = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(lowPriorityButtonXpath)));
+            lowPriority.click();
+            System.out.println("✓ Clicked 'LOW PRIORITY' filter");
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to click LOW PRIORITY filter", e);
+        }
+    }
+
+    /**
+     * TEST CASE 4 - NEW STEP 7:
+     * Click RENAL dropdown
+     */
+    public void clickRenalDropdown() {
+        try {
+            WebElement renalDropdown = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(renalDropdownXpath)));
+            renalDropdown.click();
+            System.out.println("✓ Clicked 'RENAL' dropdown");
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to click RENAL dropdown", e);
+        }
+    }
+
+    /**
+     * TEST CASE 4 - NEW STEP 8:
+     * Click HIGH PRIORITY filter and verify Creatinine High Priority is shown
+     */
+    public void clickHighPriorityAndVerifyCreatinine() {
+        try {
+            // Click HIGH PRIORITY filter
+            WebElement highPriority = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(highPriorityButtonXpath)));
+            highPriority.click();
+            System.out.println("✓ Clicked 'HIGH PRIORITY' filter");
+
+            // Wait for UI to update after filter click
+            Thread.sleep(1000);
+
+            // Verify Creatinine High Priority is displayed
+            WebElement creatinineHighPriority = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath(creatinineHighPriorityXpath)));
+
+            if (creatinineHighPriority.isDisplayed()) {
+                System.out.println("✓ Verified 'Creatinine High Priority' is displayed");
+            } else {
+                throw new RuntimeException("Creatinine High Priority is not displayed");
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Thread interrupted during HIGH PRIORITY verification", e);
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to click HIGH PRIORITY or verify Creatinine High Priority", e);
+        }
+    }
+
+    /**
+     * TEST CASE 4 - NEW STEP 9:
+     * Click MEDIUM PRIORITY filter and verify Bun Medium Priority is shown
+     */
+    public void clickMediumPriorityAndVerifyBun() {
+        try {
+            // Click MEDIUM PRIORITY filter
+            WebElement mediumPriority = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(mediumPriorityButtonXpath)));
+            mediumPriority.click();
+            System.out.println("✓ Clicked 'MEDIUM PRIORITY' filter");
+
+            // Wait for UI to update after filter click
+            Thread.sleep(1000);
+
+            // Verify Bun Medium Priority is displayed
+            WebElement bunMediumPriority = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath(bunMediumPriorityXpath)));
+
+            if (bunMediumPriority.isDisplayed()) {
+                System.out.println("✓ Verified 'Bun Medium Priority' is displayed");
+            } else {
+                throw new RuntimeException("Bun Medium Priority is not displayed");
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Thread interrupted during MEDIUM PRIORITY verification", e);
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to click MEDIUM PRIORITY or verify Bun Medium Priority", e);
+        }
+    }
+
+    /**
+     * TEST CASE 4 - NEW STEP 10:
+     * Click LOW PRIORITY filter and verify Bun/creatinine Low Priority is shown
+     */
+    public void clickLowPriorityAndVerifyBunCreatinine() {
+        try {
+            // Click LOW PRIORITY filter
+            WebElement lowPriority = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(lowPriorityButtonXpath)));
+            lowPriority.click();
+            System.out.println("✓ Clicked 'LOW PRIORITY' filter");
+
+            // Wait for UI to update after filter click
+            Thread.sleep(1000);
+
+            // Verify Bun/creatinine Low Priority is displayed
+            WebElement bunCreatinineLowPriority = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath(bunCreatinineLowPriorityXpath)));
+
+            if (bunCreatinineLowPriority.isDisplayed()) {
+                System.out.println("✓ Verified 'Bun/creatinine Low Priority' is displayed");
+            } else {
+                throw new RuntimeException("Bun/creatinine Low Priority is not displayed");
+            }
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Thread interrupted during LOW PRIORITY verification", e);
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to click LOW PRIORITY or verify Bun/creatinine Low Priority", e);
+        }
+    }
+
+    /**
+     * TEST CASE 4 - NEW STEP 12:
+     * Click priority items twice to deselect them
+     */
+    public void clickPriorityItemsTwice() {
+        try {
+            // Click Bun Medium Priority twice
+            WebElement bunMediumPriority = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(bunMediumPriorityXpath)));
+            bunMediumPriority.click();
+            System.out.println("✓ Clicked 'Bun Medium Priority' (1st time)");
+            Thread.sleep(1000); // 1 second wait
+            bunMediumPriority = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(bunSimpleXpath)));
+            bunMediumPriority.click();
+            System.out.println("✓ Clicked 'Bun' (2nd time)");
+
+            Thread.sleep(1000); // 1 second wait
+
+            // Click Creatinine High Priority twice
+            WebElement creatinineHighPriority = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(creatinineHighPriorityXpath)));
+            creatinineHighPriority.click();
+            System.out.println("✓ Clicked 'Creatinine High Priority' (1st time)");
+            Thread.sleep(1000); // 1 second wait
+            creatinineHighPriority = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(creatinineSimpleXpath)));
+            creatinineHighPriority.click();
+            System.out.println("✓ Clicked 'Creatinine' (2nd time)");
+
+            Thread.sleep(1000); // 1 second wait
+
+            // Click Bun/creatinine Low Priority twice
+            WebElement bunCreatinineLowPriority = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(bunCreatinineLowPriorityXpath)));
+            bunCreatinineLowPriority.click();
+            System.out.println("✓ Clicked 'Bun/creatinine Low Priority' (1st time)");
+            Thread.sleep(1000); // 1 second wait
+            bunCreatinineLowPriority = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(bunCreatinineSimpleXpath)));
+            bunCreatinineLowPriority.click();
+            System.out.println("✓ Clicked 'Bun/creatinine' (2nd time)");
+
+            Thread.sleep(1000); // 1 second wait
+
+            // Click Egfr Medium Priority twice
+            WebElement egfrMediumPriority = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(egfrMediumPriorityXpath)));
+            egfrMediumPriority.click();
+            System.out.println("✓ Clicked 'Egfr Medium Priority' (1st time)");
+            Thread.sleep(1000); // 1 second wait
+            egfrMediumPriority = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(egfrSimpleXpath)));
+            egfrMediumPriority.click();
+            System.out.println("✓ Clicked 'Egfr' (2nd time)");
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Thread interrupted during priority items clicks", e);
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to click priority items twice", e);
+        }
+    }
+
+    /**
+     * TEST CASE 4 - NEW STEP 13:
+     * Swipe up once to scroll the view
+     */
+    public void swipeUpOnce() {
+        try {
+            // Get screen dimensions
+            int height = driver.manage().window().getSize().getHeight();
+            int width = driver.manage().window().getSize().getWidth();
+
+            // Calculate swipe coordinates (swipe from bottom to top, middle of screen)
+            int startX = width / 2;
+            int startY = (int) (height * 0.8); // Start at 80% of screen height
+            int endY = (int) (height * 0.2); // End at 20% of screen height
+
+            // Perform swipe using W3C Actions
+            org.openqa.selenium.interactions.PointerInput finger = new org.openqa.selenium.interactions.PointerInput(
+                    org.openqa.selenium.interactions.PointerInput.Kind.TOUCH, "finger");
+            org.openqa.selenium.interactions.Sequence swipe = new org.openqa.selenium.interactions.Sequence(finger, 1);
+
+            swipe.addAction(finger.createPointerMove(java.time.Duration.ofMillis(0),
+                    org.openqa.selenium.interactions.PointerInput.Origin.viewport(), startX, startY));
+            swipe.addAction(
+                    finger.createPointerDown(org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT.asArg()));
+            swipe.addAction(finger.createPointerMove(java.time.Duration.ofMillis(1000),
+                    org.openqa.selenium.interactions.PointerInput.Origin.viewport(), startX, endY));
+            swipe.addAction(
+                    finger.createPointerUp(org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT.asArg()));
+
+            driver.perform(java.util.Arrays.asList(swipe));
+            System.out.println("✓ Swiped up once");
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to swipe up", e);
         }
     }
 

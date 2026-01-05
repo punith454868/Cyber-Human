@@ -473,46 +473,93 @@ public class DataBankTest extends BaseTest {
         dataBankPage.clickAndVerifyBloodReport();
         test.log(Status.PASS, "✓ Step 5: BLOOD REPORT clicked and page verified");
 
-        // ✅ TEST CASE 4 - STEP 6: Click back button once
-        test.log(Status.INFO, "Step 6: Clicking back button once");
+        // ✅ TEST CASE 4 - NEW STEP 6: Click priority filters (HIGH, MEDIUM, LOW)
+        test.log(Status.INFO, "Step 6: Clicking HIGH PRIORITY filter");
+        dataBankPage.clickHighPriority();
+        test.log(Status.PASS, "✓ Step 6: HIGH PRIORITY filter clicked");
+
+        test.log(Status.INFO, "Step 6: Clicking MEDIUM PRIORITY filter");
+        dataBankPage.clickMediumPriority();
+        test.log(Status.PASS, "✓ Step 6: MEDIUM PRIORITY filter clicked");
+
+        test.log(Status.INFO, "Step 6: Clicking LOW PRIORITY filter");
+        dataBankPage.clickLowPriority();
+        test.log(Status.PASS, "✓ Step 6: LOW PRIORITY filter clicked");
+
+        // ✅ TEST CASE 4 - NEW STEP 7: Click RENAL dropdown
+        test.log(Status.INFO, "Step 7: Clicking RENAL dropdown");
+        dataBankPage.clickRenalDropdown();
+        test.log(Status.PASS, "✓ Step 7: RENAL dropdown clicked");
+
+        // ✅ TEST CASE 4 - NEW STEP 8: Click HIGH PRIORITY and verify Creatinine High
+        // Priority
+        test.log(Status.INFO, "Step 8: Clicking HIGH PRIORITY and verifying Creatinine High Priority");
+        dataBankPage.clickHighPriorityAndVerifyCreatinine();
+        test.log(Status.PASS, "✓ Step 8: HIGH PRIORITY clicked and Creatinine High Priority verified");
+
+        // ✅ TEST CASE 4 - NEW STEP 9: Click MEDIUM PRIORITY and verify Bun Medium
+        // Priority
+        test.log(Status.INFO, "Step 9: Clicking MEDIUM PRIORITY and verifying Bun Medium Priority");
+        dataBankPage.clickMediumPriorityAndVerifyBun();
+        test.log(Status.PASS, "✓ Step 9: MEDIUM PRIORITY clicked and Bun Medium Priority verified");
+
+        // ✅ TEST CASE 4 - NEW STEP 10: Click LOW PRIORITY and verify Bun/creatinine Low
+        // Priority
+        test.log(Status.INFO, "Step 10: Clicking LOW PRIORITY and verifying Bun/creatinine Low Priority");
+        dataBankPage.clickLowPriorityAndVerifyBunCreatinine();
+        test.log(Status.PASS, "✓ Step 10: LOW PRIORITY clicked and Bun/creatinine Low Priority verified");
+
+        // ✅ TEST CASE 4 - NEW STEP 12: Click priority items twice to deselect
+        test.log(Status.INFO, "Step 12: Clicking priority items twice to deselect them");
+        dataBankPage.clickPriorityItemsTwice();
+        test.log(Status.PASS, "✓ Step 12: All priority items clicked twice");
+
+        // ✅ TEST CASE 4 - NEW STEP 13: Swipe up once
+        test.log(Status.INFO, "Step 13: Swiping up once");
+        dataBankPage.swipeUpOnce();
+        test.log(Status.PASS, "✓ Step 13: Swiped up once");
+
+        // ✅ TEST CASE 4 - STEP 14: Click back button once (previously step 6)
+        test.log(Status.INFO, "Step 14: Clicking back button once");
         dataBankPage.clickBackButton();
-        test.log(Status.PASS, "✓ Step 6: Back button clicked once");
+        test.log(Status.PASS, "✓ Step 14: Back button clicked once");
 
-        // ✅ TEST CASE 4 - STEP 7: Click REPORTS again
-        test.log(Status.INFO, "Step 7: Clicking REPORTS");
+        // ✅ TEST CASE 4 - STEP 15: Click REPORTS again (previously step 7)
+        test.log(Status.INFO, "Step 15: Clicking REPORTS");
         dataBankPage.clickReports();
-        test.log(Status.PASS, "✓ Step 7: REPORTS clicked");
+        test.log(Status.PASS, "✓ Step 15: REPORTS clicked");
 
-        // ✅ TEST CASE 4 - STEP 8: Click DNA REPORT and verify page
-        test.log(Status.INFO, "Step 8: Clicking DNA REPORT and verifying page");
+        // ✅ TEST CASE 4 - STEP 16: Click DNA REPORT and verify page (previously step 8)
+        test.log(Status.INFO, "Step 16: Clicking DNA REPORT and verifying page");
         dataBankPage.clickAndVerifyDnaReport();
-        test.log(Status.PASS, "✓ Step 8: DNA REPORT clicked and page verified");
+        test.log(Status.PASS, "✓ Step 16: DNA REPORT clicked and page verified");
 
-        // ✅ TEST CASE 4 - STEP 9: Click EPIGENETIC MAPPING button and verify PACKAGES
-        // & PRICING page
-        test.log(Status.INFO, "Step 9: Clicking EPIGENETIC MAPPING button and verifying PACKAGES & PRICING page");
+        // ✅ TEST CASE 4 - STEP 17: Click EPIGENETIC MAPPING button and verify PACKAGES
+        // & PRICING page (previously step 9)
+        test.log(Status.INFO, "Step 17: Clicking EPIGENETIC MAPPING button and verifying PACKAGES & PRICING page");
         dataBankPage.clickEpigeneticMappingAndVerifyPackagesPage();
-        test.log(Status.PASS, "✓ Step 9: EPIGENETIC MAPPING clicked and PACKAGES & PRICING page verified");
+        test.log(Status.PASS, "✓ Step 17: EPIGENETIC MAPPING clicked and PACKAGES & PRICING page verified");
 
-        // ✅ TEST CASE 4 - STEP 10: Click back button twice
-        test.log(Status.INFO, "Step 10: Clicking back button twice");
+        // ✅ TEST CASE 4 - STEP 18: Click back button twice (previously step 10)
+        test.log(Status.INFO, "Step 18: Clicking back button twice");
         dataBankPage.clickBackButtonTwice();
-        test.log(Status.PASS, "✓ Step 10: Back button clicked twice");
+        test.log(Status.PASS, "✓ Step 18: Back button clicked twice");
 
-        // ✅ TEST CASE 4 - STEP 11: Click REPORTS again
-        test.log(Status.INFO, "Step 11: Clicking REPORTS");
+        // ✅ TEST CASE 4 - STEP 19: Click REPORTS again (previously step 11)
+        test.log(Status.INFO, "Step 19: Clicking REPORTS");
         dataBankPage.clickReports();
-        test.log(Status.PASS, "✓ Step 11: REPORTS clicked");
+        test.log(Status.PASS, "✓ Step 19: REPORTS clicked");
 
-        // ✅ TEST CASE 4 - STEP 12: Click DEVICE REPORT and verify page
-        test.log(Status.INFO, "Step 12: Clicking DEVICE REPORT and verifying page");
+        // ✅ TEST CASE 4 - STEP 20: Click DEVICE REPORT and verify page (previously step
+        // 12)
+        test.log(Status.INFO, "Step 20: Clicking DEVICE REPORT and verifying page");
         dataBankPage.clickAndVerifyDeviceReport();
-        test.log(Status.PASS, "✓ Step 12: DEVICE REPORT clicked and page verified");
+        test.log(Status.PASS, "✓ Step 20: DEVICE REPORT clicked and page verified");
 
-        // ✅ TEST CASE 4 - STEP 13: Click back button twice
-        test.log(Status.INFO, "Step 13: Clicking back button twice");
+        // ✅ TEST CASE 4 - STEP 21: Click back button twice (previously step 13)
+        test.log(Status.INFO, "Step 21: Clicking back button twice");
         dataBankPage.clickBackButtonTwice();
-        test.log(Status.PASS, "✓ Step 13: Back button clicked twice");
+        test.log(Status.PASS, "✓ Step 21: Back button clicked twice");
 
         test.log(Status.PASS, "Data Bank Test Case 4 completed successfully");
     }
