@@ -312,16 +312,16 @@ public class ForgotPasswordTest extends BaseTest {
 
         // ==================== STEP 26: Enter Correct Password in First Field
         // ====================
-        test.log(Status.INFO, "Step 26: Entering correct password in first field (Human@2025)");
-        forgotPasswordPage.enterCorrectPassword1("Human@2025");
-        test.log(Status.PASS, "✓ Step 26: Correct password entered in first field (Human@2025)");
+        test.log(Status.INFO, "Step 26: Entering correct password in first field (Testing@2026)");
+        forgotPasswordPage.enterCorrectPassword1("Testing@2026");
+        test.log(Status.PASS, "✓ Step 26: Correct password entered in first field (Testing@2026)");
         Thread.sleep(1000);
 
         // ==================== STEP 27: Enter Correct Password in Second Field
         // ====================
-        test.log(Status.INFO, "Step 27: Entering correct password in second field (Human@2025)");
-        forgotPasswordPage.enterCorrectPassword2("Human@2025");
-        test.log(Status.PASS, "✓ Step 27: Correct password entered in second field (Human@2025)");
+        test.log(Status.INFO, "Step 27: Entering correct password in second field (Testing@2026)");
+        forgotPasswordPage.enterCorrectPassword2("Testing@2026");
+        test.log(Status.PASS, "✓ Step 27: Correct password entered in second field (Testing@2026)");
         Thread.sleep(1000);
 
         // ==================== STEP 28: Click Reset Password Button
