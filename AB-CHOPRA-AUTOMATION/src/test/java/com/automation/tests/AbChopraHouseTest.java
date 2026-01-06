@@ -99,7 +99,7 @@ public class AbChopraHouseTest extends BaseTest {
                 test.log(Status.INFO, "Step 7: Swiping down once");
                 abChopraHousePage.swipeDownOnce();
                 test.log(Status.PASS, "✓ Step 7: Swiped down once");
-                Thread.sleep(1000);
+                Thread.sleep(5000);
 
                 // ✅ STEP 8: Click DISCOVER +
                 test.log(Status.INFO, "Step 8: Clicking DISCOVER +");
@@ -152,7 +152,7 @@ public class AbChopraHouseTest extends BaseTest {
                 test.log(Status.INFO, "Step 12: Clicking APPLY and waiting for loading");
                 abChopraHousePage.clickApply();
                 test.log(Status.PASS, "✓ Step 12: APPLY clicked and loading completed");
-                Thread.sleep(15000); // Wait for page to load completely before proceeding
+                Thread.sleep(9000); // Wait for page to load completely before proceeding
 
                 // ✅ STEP 13: Click See All 1, verify Listen page, click back
                 test.log(Status.INFO, "Step 13: Clicking See All 1");
@@ -239,6 +239,11 @@ public class AbChopraHouseTest extends BaseTest {
                 abChopraHousePage.createFile("New");
                 test.log(Status.PASS, "✓ Step 19 (second): File name 'New' entered");
                 Thread.sleep(1000);
+
+                // ✅ STEP 19.5: Trigger save before close (force focus loss)
+                test.log(Status.INFO, "Step 19.5: Triggering save by forcing focus loss");
+                abChopraHousePage.triggerSaveBeforeClose();
+                test.log(Status.PASS, "✓ Step 19.5: Focus loss triggered, save callback executed");
 
                 // ✅ STEP 20: Click close icon
                 test.log(Status.INFO, "Step 20: Clicking close icon");

@@ -62,7 +62,7 @@ public class EditProfileTest extends BaseTest {
     private void navigateToEditProfileFirstTime() throws InterruptedException {
         // Step 1: Sign In with valid credentials
         SignInPage signInPage = new SignInPage(driver);
-        signInPage.enterEmail("kathirmskgt@gmail.com");
+        signInPage.enterEmail("ramesh@navadhiti.com");
         signInPage.enterPassword("Testing@2026");
         signInPage.clickContinue();
         test.log(Status.INFO, "Signed in with valid credentials");

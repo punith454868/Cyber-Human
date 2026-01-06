@@ -443,4 +443,200 @@ public class SignUpPage {
             return false;
         }
     }
+
+    /**
+     * Click Terms of Use link
+     */
+    public void clickTermsOfUse() {
+        WebElement termsLink = findElementWithFallback(null,
+                "//android.view.View[@content-desc='Terms of Use']",
+                "Terms of Use");
+        termsLink.click();
+    }
+
+    /**
+     * Verify Terms of Use page is displayed
+     */
+    public boolean isTermsOfUsePageDisplayed() {
+        try {
+            WebElement termsHeading = findElementWithFallback(null,
+                    "//android.view.View[@content-desc='TERMS & CONDITIONS']",
+                    "TERMS & CONDITIONS");
+            return termsHeading.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Click Privacy Policy link
+     */
+    public void clickPrivacyPolicy() {
+        WebElement privacyLink = findElementWithFallback(null,
+                "//android.view.View[@content-desc='Privacy Policy']",
+                "Privacy Policy");
+        privacyLink.click();
+    }
+
+    /**
+     * Verify Privacy Policy page is displayed
+     */
+    public boolean isPrivacyPolicyPageDisplayed() {
+        try {
+            WebElement privacyHeading = findElementWithFallback(null,
+                    "//android.view.View[@content-desc='PRIVACY POLICY']",
+                    "PRIVACY POLICY");
+            return privacyHeading.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Click back button (ImageView)
+     */
+    public void clickBackButton() {
+        WebElement backBtn = findElementWithFallback(null,
+                "//android.widget.ImageView",
+                null);
+        backBtn.click();
+    }
+
+    /**
+     * Click checkbox 1
+     */
+    public void clickCheckbox1() {
+        WebElement checkbox = findElementWithFallback(null,
+                "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[1]",
+                null);
+        checkbox.click();
+    }
+
+    /**
+     * Click checkbox 2
+     */
+    public void clickCheckbox2() {
+        WebElement checkbox = findElementWithFallback(null,
+                "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[3]",
+                null);
+        checkbox.click();
+    }
+
+    /**
+     * Click checkbox 3
+     */
+    public void clickCheckbox3() {
+        WebElement checkbox = findElementWithFallback(null,
+                "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[5]",
+                null);
+        checkbox.click();
+    }
+
+    /**
+     * Click checkbox 4
+     */
+    public void clickCheckbox4() {
+        WebElement checkbox = findElementWithFallback(null,
+                "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[7]",
+                null);
+        checkbox.click();
+    }
+
+    /**
+     * Verify Confirm Your Email page is displayed
+     */
+    public boolean isConfirmEmailPageDisplayed() {
+        try {
+            WebElement confirmEmailHeading = findElementWithFallback(null,
+                    "//android.view.View[@content-desc='CONFIRM YOUR EMAIL']",
+                    "CONFIRM YOUR EMAIL");
+            return confirmEmailHeading.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Enter OTP code (6 digits)
+     */
+    public void enterOTP(String otp) {
+        WebElement otpField = findElementWithFallback(null,
+                "//android.widget.FrameLayout[@resource-id='android:id/content']/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.widget.EditText[1]",
+                null);
+        otpField.click();
+        otpField.clear();
+        otpField.sendKeys(otp);
+    }
+
+    /**
+     * Click Verify button
+     */
+    public void clickVerifyButton() {
+        WebElement verifyBtn = findElementWithFallback(null,
+                "//android.widget.Button[@content-desc='VERIFY']",
+                "VERIFY");
+        verifyBtn.click();
+    }
+
+    /**
+     * Get incorrect OTP error message
+     */
+    public String getIncorrectOTPError() {
+        try {
+            WebElement errorMsg = findElementWithFallback(null,
+                    "//android.view.View[@content-desc='Incorrect code. Please try again.']",
+                    "Incorrect code. Please try again.");
+            return errorMsg.getAttribute("content-desc");
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Click Get a new code button
+     */
+    public void clickGetNewCode() {
+        WebElement newCodeBtn = findElementWithFallback(null,
+                "//android.view.View[@content-desc='Get a new code']",
+                "Get a new code");
+        newCodeBtn.click();
+    }
+
+    /**
+     * Verify Resend Successful dialog is displayed
+     */
+    public boolean isResendSuccessfulDialogDisplayed() {
+        try {
+            WebElement resendDialog = findElementWithFallback(null,
+                    "//android.view.View[@content-desc='RESEND SUCCESSFUL']",
+                    "RESEND SUCCESSFUL");
+            return resendDialog.isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Get resend successful message
+     */
+    public String getResendSuccessfulMessage() {
+        try {
+            WebElement successMsg = findElementWithFallback(null,
+                    "//android.view.View[@content-desc='Verification code has been sent successfully.']",
+                    "Verification code has been sent successfully.");
+            return successMsg.getAttribute("content-desc");
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Click OK button
+     */
+    public void clickOKButton() {
+        WebElement okBtn = findElementWithFallback(null,
+                "//android.widget.Button[@content-desc='OK']",
+                "OK");
+        okBtn.click();
+    }
 }

@@ -557,7 +557,71 @@ public class AbChopraHousePage {
     }
 
     /**
+     * Step 19.5: Trigger save before closing by forcing focus loss
+     * This method MUST be called after entering data and BEFORE clicking Close icon
+     * 
+     * The app only saves data when input focus is lost.
+     * Direct Close click skips the save logic.
+     * 
+     * Solution: Force focus loss by:
+     * 1. Hide keyboard to remove input focus
+     * 2. Tap outside the input field (bottom of screen) using W3C touch actions
+     * 3. Wait for app to trigger its save callback
+     * 
+     * This simulates real user behavior and ensures data is saved.
+     */
+    public void triggerSaveBeforeClose() {
+        try {
+            // Step 1: Hide keyboard to remove input focus
+            try {
+                ((io.appium.java_client.android.AndroidDriver) driver).hideKeyboard();
+                Thread.sleep(500); // Allow keyboard to fully hide
+            } catch (Exception e) {
+                // Keyboard might already be hidden, continue
+                System.out.println("Keyboard hide failed or already hidden: " + e.getMessage());
+            }
+
+            // Step 2: Tap outside the input field at bottom of screen
+            // This forces focus loss and triggers the app's auto-save callback
+            Dimension screenSize = driver.manage().window().getSize();
+
+            // Calculate tap coordinates: center X, 90% down Y (bottom area)
+            int tapX = screenSize.width / 2;
+            int tapY = (int) (screenSize.height * 0.9);
+
+            // Perform coordinate-based tap using W3C Actions
+            // PointerInput.Kind.TOUCH simulates a real finger tap
+            PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+            Sequence tap = new Sequence(finger, 1);
+
+            // Move pointer to bottom area
+            tap.addAction(finger.createPointerMove(
+                    Duration.ZERO,
+                    PointerInput.Origin.viewport(),
+                    tapX,
+                    tapY));
+
+            // Pointer down (finger press)
+            tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+
+            // Pointer up (finger release)
+            tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+
+            // Execute the tap action
+            driver.perform(Collections.singletonList(tap));
+
+            // Step 3: Wait for app to trigger save callback
+            Thread.sleep(1000);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to trigger save before close", e);
+        }
+    }
+
+    /**
      * Step 20: Click close icon
+     * NOTE: Must call triggerSaveBeforeClose() BEFORE this method
+     * to ensure data is saved (by forcing focus loss)
      */
     public void clickCloseIcon() {
         try {

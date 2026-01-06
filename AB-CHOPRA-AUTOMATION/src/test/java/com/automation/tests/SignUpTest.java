@@ -176,8 +176,8 @@ public class SignUpTest extends BaseTest {
     }
 
     /**
-     * ✅ POSITIVE SIGN UP TEST (Optional - for comparison)
-     * This test expects successful sign up without validation errors
+     * ✅ POSITIVE SIGN UP TEST WITH COMPLETE FLOW
+     * This test expects successful sign up with full verification flow
      * 
      * Test Flow:
      * 0. Navigate from Sign In page to Sign Up page
@@ -186,11 +186,24 @@ public class SignUpTest extends BaseTest {
      * 3. Click SIGN UP heading
      * 4. Click Continue button
      * 5. Verify no validation errors appear
+     * 6. Click Terms of Use and verify, then go back
+     * 7. Click Privacy Policy and verify, then go back
+     * 8. Click all 4 checkboxes
+     * 9. Click Continue button
+     * 10. Verify Confirm Your Email page
+     * 11. Enter incorrect OTP (123456)
+     * 12. Click Verify button
+     * 13. Verify error message appears
+     * 14. Click Get a new code
+     * 15. Wait 9 seconds
+     * 16. Verify Resend Successful dialog
+     * 17. Get and log success message
+     * 18. Click OK button
      */
     @Test
     public void testPositiveSignUp() throws InterruptedException {
-        test = extent.createTest("Positive Test: Valid Sign Up");
-        test.log(Status.INFO, "Testing valid sign up credentials");
+        test = extent.createTest("Positive Test: Valid Sign Up - Complete Flow");
+        test.log(Status.INFO, "Testing valid sign up with complete verification flow");
 
         // Step 0: Smart Navigation to Sign Up page
         navigateToSignUp();
@@ -205,51 +218,139 @@ public class SignUpTest extends BaseTest {
         // Step 1: Enter form data
         signUpPage.enterName(validName);
         signUpPage.enterEmail(validEmail);
-        test.log(Status.INFO, "Entered valid name and email");
+        test.log(Status.INFO, "Step 1: Entered valid name and email");
 
         // Step 2: Select country from dropdown
         signUpPage.selectFirstCountryOption();
-        test.log(Status.INFO, "Selected country from dropdown");
+        test.log(Status.INFO, "Step 2: Selected country from dropdown");
 
         // Step 3: Enter passwords
         signUpPage.enterPassword(validPassword);
         signUpPage.enterConfirmPassword(validPassword);
-        test.log(Status.INFO, "Entered valid password and confirm password");
+        test.log(Status.INFO, "Step 3: Entered valid password and confirm password");
 
         // Step 4: Click SIGN UP heading (required before Continue)
         signUpPage.clickSignUpHeading();
-        test.log(Status.INFO, "Clicked SIGN UP heading");
+        test.log(Status.INFO, "Step 4: Clicked SIGN UP heading");
 
         // Step 5: Click Continue button
         signUpPage.clickContinue();
-        test.log(Status.INFO, "Clicked Continue button");
+        test.log(Status.INFO, "Step 5: Clicked Continue button");
 
-        Thread.sleep(2000); // Wait for validation/navigation
+        Thread.sleep(2000); // Wait for navigation to consent page
 
-        // Check for Consent Page (Success State)
-        if (signUpPage.isConsentPageDisplayed()) {
-            // ✅ PASS: Consent Page displayed - Sign up successful
-            test.log(Status.PASS, "✓ Consent Page displayed - Sign up successful");
-            test.log(Status.PASS, "Test PASSED: Valid credentials accepted");
-            return;
-        }
+        // Step 6: Click Terms of Use and verify
+        signUpPage.clickTermsOfUse();
+        test.log(Status.INFO, "Step 6: Clicked Terms of Use link");
+        Thread.sleep(1500);
 
-        // For positive case, we expect NO validation errors
-        boolean validationDetected = signUpPage.isAnyValidationVisible();
-
-        if (!validationDetected) {
-            // ✅ PASS: No validation errors for valid credentials
-            test.log(Status.PASS, "✓ No validation errors - Sign up successful");
-            test.log(Status.PASS, "Test PASSED: Valid credentials accepted");
+        if (signUpPage.isTermsOfUsePageDisplayed()) {
+            test.log(Status.PASS, "✓ Terms of Use page displayed successfully");
         } else {
-            // ❌ FAIL: Unexpected validation for valid credentials
-            String validationMessage = signUpPage.getValidationMessage();
-            if (validationMessage != null) {
-                test.log(Status.FAIL, "Validation message: \"" + validationMessage + "\"");
-            }
-            test.log(Status.FAIL, "✗ Unexpected validation appeared for valid credentials");
-            test.log(Status.FAIL, "Test FAILED: Valid credentials were rejected");
-            Assert.fail("Valid credentials should not show validation errors");
+            test.log(Status.FAIL, "✗ Terms of Use page NOT displayed");
+            Assert.fail("Terms of Use page verification failed");
         }
+
+        // Click back button
+        signUpPage.clickBackButton();
+        test.log(Status.INFO, "Step 6: Clicked back button from Terms of Use");
+        Thread.sleep(1500);
+
+        // Step 7: Click Privacy Policy and verify
+        signUpPage.clickPrivacyPolicy();
+        test.log(Status.INFO, "Step 7: Clicked Privacy Policy link");
+        Thread.sleep(1500);
+
+        if (signUpPage.isPrivacyPolicyPageDisplayed()) {
+            test.log(Status.PASS, "✓ Privacy Policy page displayed successfully");
+        } else {
+            test.log(Status.FAIL, "✗ Privacy Policy page NOT displayed");
+            Assert.fail("Privacy Policy page verification failed");
+        }
+
+        // Click back button
+        signUpPage.clickBackButton();
+        test.log(Status.INFO, "Step 7: Clicked back button from Privacy Policy");
+        Thread.sleep(1500);
+
+        // Step 8: Click all 4 checkboxes
+        signUpPage.clickCheckbox1();
+        test.log(Status.INFO, "Step 8: Clicked checkbox 1");
+        Thread.sleep(500);
+
+        signUpPage.clickCheckbox2();
+        test.log(Status.INFO, "Step 8: Clicked checkbox 2");
+        Thread.sleep(500);
+
+        signUpPage.clickCheckbox3();
+        test.log(Status.INFO, "Step 8: Clicked checkbox 3");
+        Thread.sleep(500);
+
+        signUpPage.clickCheckbox4();
+        test.log(Status.INFO, "Step 8: Clicked checkbox 4");
+        Thread.sleep(500);
+
+        // Step 9: Click Continue button
+        signUpPage.clickContinue();
+        test.log(Status.INFO, "Step 9: Clicked Continue button after checkboxes");
+        Thread.sleep(2000);
+
+        // Step 10: Verify Confirm Your Email page
+        if (signUpPage.isConfirmEmailPageDisplayed()) {
+            test.log(Status.PASS, "✓ Step 10: Confirm Your Email page displayed successfully");
+        } else {
+            test.log(Status.FAIL, "✗ Step 10: Confirm Your Email page NOT displayed");
+            Assert.fail("Confirm Your Email page verification failed");
+        }
+
+        // Step 11: Enter incorrect OTP (123456)
+        signUpPage.enterOTP("123456");
+        test.log(Status.INFO, "Step 11: Entered incorrect OTP: 123456");
+        Thread.sleep(1000);
+
+        // Step 12: Click Verify button
+        signUpPage.clickVerifyButton();
+        test.log(Status.INFO, "Step 12: Clicked Verify button");
+        Thread.sleep(2000);
+
+        // Step 13: Verify error message appears
+        String errorMessage = signUpPage.getIncorrectOTPError();
+        if (errorMessage != null && !errorMessage.isEmpty()) {
+            test.log(Status.PASS, "✓ Step 13: Error message displayed: \"" + errorMessage + "\"");
+        } else {
+            test.log(Status.WARNING, "⚠ Step 13: Error message not found or empty");
+        }
+
+        // Step 14: Click Get a new code
+        signUpPage.clickGetNewCode();
+        test.log(Status.INFO, "Step 14: Clicked 'Get a new code' button");
+
+        // Step 15: Wait 9 seconds
+        Thread.sleep(9000);
+        test.log(Status.INFO, "Step 15: Waited 9 seconds");
+
+        // Step 16: Verify Resend Successful dialog
+        if (signUpPage.isResendSuccessfulDialogDisplayed()) {
+            test.log(Status.PASS, "✓ Step 16: Resend Successful dialog displayed");
+        } else {
+            test.log(Status.FAIL, "✗ Step 16: Resend Successful dialog NOT displayed");
+            Assert.fail("Resend Successful dialog verification failed");
+        }
+
+        // Step 17: Get and log success message
+        String successMessage = signUpPage.getResendSuccessfulMessage();
+        if (successMessage != null && !successMessage.isEmpty()) {
+            test.log(Status.PASS, "✓ Step 17: Success message: \"" + successMessage + "\"");
+        } else {
+            test.log(Status.WARNING, "⚠ Step 17: Success message not found or empty");
+        }
+
+        // Step 18: Click OK button
+        signUpPage.clickOKButton();
+        test.log(Status.INFO, "Step 18: Clicked OK button");
+        Thread.sleep(1000);
+
+        // ✅ Test completed successfully
+        test.log(Status.PASS, "✓ Test PASSED: Complete sign-up flow executed successfully");
     }
 }

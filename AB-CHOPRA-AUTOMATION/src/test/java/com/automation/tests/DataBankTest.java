@@ -311,97 +311,59 @@ public class DataBankTest extends BaseTest {
         dataBankPage.clickLinkDeviceButton();
         test.log(Status.PASS, "✓ Step 5: LINK DEVICE button clicked");
 
-        // ✅ TEST CASE 3 - STEP 6: Click checkbox
-        test.log(Status.INFO, "Step 6: Clicking checkbox");
+        // ✅ TEST CASE 3 - NEW STEP 6: Click ULTRAHUMAN button
+        test.log(Status.INFO, "Step 6: Clicking ULTRAHUMAN button");
+        dataBankPage.clickUltrahumanButton();
+        test.log(Status.PASS, "✓ Step 6: ULTRAHUMAN button clicked");
+
+        // ✅ TEST CASE 3 - STEP 7: Click checkbox (previously step 6)
+        test.log(Status.INFO, "Step 7: Clicking checkbox");
         dataBankPage.clickCheckbox();
-        test.log(Status.PASS, "✓ Step 6: Checkbox clicked");
+        test.log(Status.PASS, "✓ Step 7: Checkbox clicked");
 
-        // ✅ TEST CASE 3 - STEP 7: Click CONTINUE button
-        test.log(Status.INFO, "Step 7: Clicking CONTINUE button");
+        // ✅ TEST CASE 3 - STEP 8: Click CONTINUE button (previously step 7)
+        test.log(Status.INFO, "Step 8: Clicking CONTINUE button");
         dataBankPage.clickContinueButton();
-        test.log(Status.PASS, "✓ Step 7: CONTINUE button clicked");
+        test.log(Status.PASS, "✓ Step 8: CONTINUE button clicked");
 
-        // ✅ TEST CASE 3 - STEP 8: Verify CONNECT WITH ULTRAHUMAN dialog
-        test.log(Status.INFO, "Step 8: Verifying CONNECT WITH ULTRAHUMAN dialog");
+        // ✅ TEST CASE 3 - STEP 9: Verify CONNECT WITH ULTRAHUMAN dialog (previously
+        // step 8)
+        test.log(Status.INFO, "Step 9: Verifying CONNECT WITH ULTRAHUMAN dialog");
         dataBankPage.verifyConnectWithUltrahumanDialog();
-        test.log(Status.PASS, "✓ Step 8: CONNECT WITH ULTRAHUMAN dialog verified");
+        test.log(Status.PASS, "✓ Step 9: CONNECT WITH ULTRAHUMAN dialog verified");
 
-        // ✅ TEST CASE 3 - STEP 9: Enter invalid email
-        test.log(Status.INFO, "Step 9: Entering invalid email");
+        // ✅ TEST CASE 3 - STEP 10: Enter invalid email (previously step 9)
+        test.log(Status.INFO, "Step 10: Entering invalid email");
         dataBankPage.enterInvalidEmail("invalid.email");
-        test.log(Status.PASS, "✓ Step 9: Invalid email entered");
+        test.log(Status.PASS, "✓ Step 10: Invalid email entered");
 
-        // ✅ TEST CASE 3 - STEP 10: Click VERIFY button
-        test.log(Status.INFO, "Step 10: Clicking VERIFY button");
+        // ✅ TEST CASE 3 - STEP 11: Click VERIFY button (previously step 10)
+        test.log(Status.INFO, "Step 11: Clicking VERIFY button");
         dataBankPage.clickVerifyButton();
-        test.log(Status.PASS, "✓ Step 10: VERIFY button clicked");
+        test.log(Status.PASS, "✓ Step 11: VERIFY button clicked");
 
-        // ✅ TEST CASE 3 - STEP 11 & 12: Validate INVALID EMAIL ID dialog and capture
-        // error message
-        test.log(Status.INFO, "Step 11: Validating INVALID EMAIL ID dialog");
+        // ✅ TEST CASE 3 - STEP 12 & 13: Validate INVALID EMAIL ID dialog and capture
+        // error message (previously step 11 & 12)
+        test.log(Status.INFO, "Step 12: Validating INVALID EMAIL ID dialog");
         String errorMessage = dataBankPage.validateInvalidEmailDialog();
-        test.log(Status.PASS, "✓ Step 11: INVALID EMAIL ID dialog validated");
-        test.log(Status.INFO, "📋 Step 12 - Error Message: " + errorMessage);
+        test.log(Status.PASS, "✓ Step 12: INVALID EMAIL ID dialog validated");
+        test.log(Status.INFO, "📋 Step 13 - Error Message: " + errorMessage);
 
         // Verify the error message
         Assert.assertEquals(errorMessage, "INVALID EMAIL ID",
                 "Error message should indicate invalid email");
-        test.log(Status.PASS, "✓ Step 12: Verified error message captured");
+        test.log(Status.PASS, "✓ Step 13: Verified error message captured");
 
-        // ✅ TEST CASE 3 - STEP 13: Click OK button after invalid email
-        test.log(Status.INFO, "Step 13: Clicking OK button");
+        // ✅ TEST CASE 3 - STEP 14: Click OK button after invalid email (previously step
+        // 13)
+        test.log(Status.INFO, "Step 14: Clicking OK button");
         dataBankPage.clickOkButton();
-        test.log(Status.PASS, "✓ Step 13: OK button clicked");
+        test.log(Status.PASS, "✓ Step 14: OK button clicked");
 
-        // ✅ TEST CASE 3 - STEP 14-17: Repeat steps 5, 6, 7, 8 (Link Device, Checkbox,
-        // Continue, Verify Dialog)
-        test.log(Status.INFO, "Step 14: Repeating flow - Click LINK DEVICE button");
-        dataBankPage.clickLinkDeviceButton();
-        test.log(Status.PASS, "✓ Step 14: LINK DEVICE button clicked");
-
-        test.log(Status.INFO, "Step 15: Clicking checkbox");
-        dataBankPage.clickCheckbox();
-        test.log(Status.PASS, "✓ Step 15: Checkbox clicked");
-
-        test.log(Status.INFO, "Step 16: Clicking CONTINUE button");
-        dataBankPage.clickContinueButton();
-        test.log(Status.PASS, "✓ Step 16: CONTINUE button clicked");
-
-        test.log(Status.INFO, "Step 17: Verifying CONNECT WITH ULTRAHUMAN dialog");
-        dataBankPage.verifyConnectWithUltrahumanDialog();
-        test.log(Status.PASS, "✓ Step 17: CONNECT WITH ULTRAHUMAN dialog verified");
-
-        // ✅ TEST CASE 3 - STEP 18: Enter valid email
-        test.log(Status.INFO, "Step 18: Entering valid email");
-        dataBankPage.enterValidEmail("kathirmskgt@gmail.com");
-        test.log(Status.PASS, "✓ Step 18: Valid email entered (kathirmskgt@gmail.com)");
-
-        // ✅ TEST CASE 3 - STEP 19: Click VERIFY button
-        test.log(Status.INFO, "Step 19: Clicking VERIFY button");
-        dataBankPage.clickVerifyButton();
-        test.log(Status.PASS, "✓ Step 19: VERIFY button clicked");
-
-        // ✅ TEST CASE 3 - STEP 20 & 21: Validate DEVICE LINKED dialog and capture
-        // success message
-        test.log(Status.INFO, "Step 20: Validating DEVICE LINKED dialog");
-        String successMessage = dataBankPage.validateDeviceLinkedDialog();
-        test.log(Status.PASS, "✓ Step 20: DEVICE LINKED dialog validated");
-        test.log(Status.INFO, "📋 Step 21 - Success Message: " + successMessage);
-
-        // Verify the success message
-        Assert.assertEquals(successMessage, "Your device has been successfully linked.",
-                "Success message should confirm device linking");
-        test.log(Status.PASS, "✓ Step 21: Verified success message captured");
-
-        // ✅ TEST CASE 3 - STEP 22: Click OK button after successful device linking
-        test.log(Status.INFO, "Step 22: Clicking OK button");
-        dataBankPage.clickOkButton();
-        test.log(Status.PASS, "✓ Step 22: OK button clicked");
-
-        // ✅ Step 23: Close the application to start fresh for the next test
-        test.log(Status.INFO, "Step 23: Closing application for fresh start");
+        // ✅ Step 15: Close the application to start fresh for the next test
+        test.log(Status.INFO, "Step 15: Closing application for fresh start");
         ((io.appium.java_client.android.AndroidDriver) driver).terminateApp("com.houseofepigenetics.abchopra");
-        test.log(Status.PASS, "✓ Step 23: Application closed successfully");
+        test.log(Status.PASS, "✓ Step 15: Application closed successfully");
 
         test.log(Status.PASS, "Data Bank Test Case 3 completed successfully");
     }
