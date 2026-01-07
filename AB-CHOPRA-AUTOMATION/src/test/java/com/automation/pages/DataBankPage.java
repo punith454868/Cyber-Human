@@ -12,6 +12,8 @@ import java.time.Duration;
 import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.interactions.PointerInput;
 import java.util.Collections;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.List;
 
 public class DataBankPage {
@@ -1329,33 +1331,87 @@ public class DataBankPage {
     }
 
     /**
-     * Click the Date of Birth field for STEP 22 (Correct DOB) using fixed
-     * coordinates.
-     * Requirement: Step 22 fails with locators when populated, so using fixed
-     * coordinates [55,741][1025,917].
+     * Click the Date of Birth field for STEP 22 (Correct DOB) using dynamic bounds.
+     * Requirement: Step 22 fails with locators when populated.
+     * This method locates the element by class+clickable+enabled, retrieves its
+     * bounds,
+     * calculates the center, and performs a tap. It is resolution-independent.
      */
-    public void clickDobByFixedCoordinates() {
-        try {
-            System.out.println("Step 22: Tapping DOB field using fixed coordinates (540, 829)...");
-            hideKeyboard();
-            Thread.sleep(1000);
+    public void clickDobFieldDynamic() {
+        int maxAttempts = 2;
+        boolean success = false;
+        Exception lastException = null;
 
-            // Center of bounds [55,741][1025,917]
-            int centerX = 540;
-            int centerY = 829;
+        for (int i = 1; i <= maxAttempts; i++) {
+            try {
+                System.out.println("Step 22: Attempt " + i + " to click DOB field via dynamic bounds...");
+                hideKeyboard();
+                Thread.sleep(1500);
 
-            PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
-            Sequence tap = new Sequence(finger, 1);
+                // Locate clickable Views. DOB is typically the main clickable View in this
+                // context.
+                // We avoid text/index/fixed coordinates as requested.
+                // Using UIAutomator to find clickable and enabled Views.
+                List<WebElement> clickableViews = driver.findElements(AppiumBy.androidUIAutomator(
+                        "new UiSelector().className(\"android.view.View\").clickable(true).enabled(true)"));
 
-            tap.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), centerX, centerY));
-            tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
-            tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+                if (clickableViews.isEmpty()) {
+                    throw new RuntimeException("No clickable android.view.View found for DOB");
+                }
 
-            driver.perform(Collections.singletonList(tap));
-            System.out.println("✓ Step 22: DOB field tapped via Fixed Coordinates (540, 829)");
+                // In Step 22, the DOB field is a prominent clickable View.
+                // If multiple exist, we target the one likely to be the input field.
+                // For robustness across devices, we pick the one that has valid dimensions.
+                WebElement dobField = null;
+                for (WebElement v : clickableViews) {
+                    String b = v.getAttribute("bounds");
+                    if (b != null && b.contains("][")) {
+                        dobField = v; // Found potential field
+                        break;
+                    }
+                }
 
-        } catch (Exception e) {
-            throw new RuntimeException("CRITICAL: Failed Step 22 Fixed Coordinate tap: " + e.getMessage(), e);
+                if (dobField == null)
+                    throw new RuntimeException("Could not identify DOB field from clickable views");
+
+                // 2-3. Retrieve bounds dynamically and calculate center
+                String bounds = dobField.getAttribute("bounds");
+                Pattern p = Pattern.compile("\\[(\\d+),(\\d+)\\]\\[(\\d+),(\\d+)\\]");
+                Matcher m = p.matcher(bounds);
+                if (!m.find())
+                    throw new RuntimeException("Failed to parse bounds: " + bounds);
+
+                int x1 = Integer.parseInt(m.group(1));
+                int y1 = Integer.parseInt(m.group(2));
+                int x2 = Integer.parseInt(m.group(3));
+                int y2 = Integer.parseInt(m.group(4));
+
+                int centerX = (x1 + x2) / 2;
+                int centerY = (y1 + y2) / 2;
+
+                // 4. Perform tap using W3C Actions on calculated center
+                PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+                Sequence tap = new Sequence(finger, 1);
+                tap.addAction(
+                        finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), centerX, centerY));
+                tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+                tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+                driver.perform(Collections.singletonList(tap));
+
+                System.out.println("✓ Step 22: DOB field tapped via Dynamic Bounds " + bounds + " at (" + centerX + ", "
+                        + centerY + ")");
+                success = true;
+                break;
+            } catch (Exception e) {
+                lastException = e;
+                System.out.println("⚠ Attempt " + i + " failed: " + e.getMessage());
+            }
+        }
+
+        if (!success) {
+            throw new RuntimeException(
+                    "CRITICAL: DOB field could not be clicked via dynamic bounds after " + maxAttempts + " attempts",
+                    lastException);
         }
     }
 
@@ -1783,10 +1839,9 @@ public class DataBankPage {
 
     public void fillDOBFieldCorrect() {
         try {
-            // ✅ STEP 22: Click DOB field using FIXED COORDINATES
-            // Bounds [55,741][1025,917] -> Center (540, 829)
-            clickDobByFixedCoordinates();
-            System.out.println("✓ Step 22: Clicked DOB field via Fixed Coordinates");
+            // ✅ STEP 22: Click DOB field using DYNAMIC BOUNDS (Device Independent)
+            clickDobFieldDynamic();
+            System.out.println("✓ Step 22: Clicked DOB field via Dynamic Bounds");
 
             Thread.sleep(1500); // Wait for date picker
 

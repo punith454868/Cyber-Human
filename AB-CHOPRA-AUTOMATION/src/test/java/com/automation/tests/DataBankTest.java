@@ -104,12 +104,15 @@ public class DataBankTest extends BaseTest {
         // ✅ TEST CASE 1 - STEP 7: Click CONTINUE button again
         test.log(Status.INFO, "Step 7: Clicking CONTINUE button");
         dataBankPage.clickContinueButton();
+        System.out.println("✓ Step 7: CONTINUE button clicked (Test)");
         test.log(Status.PASS, "✓ Step 7: CONTINUE button clicked");
         Thread.sleep(2000);
 
         // ✅ TEST CASE 1 - STEP 8: Verify BAG page
+        System.out.println("Step 8: Starting Verify BAG page...");
         test.log(Status.INFO, "Step 8: Verifying BAG page");
         dataBankPage.verifyBagPage();
+        System.out.println("✓ Step 8: BAG page verified (Test)");
         test.log(Status.PASS, "✓ Step 8: BAG page verified");
         Thread.sleep(2000);
 
