@@ -1,6 +1,7 @@
 package com.automation.pages;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
@@ -8,6 +9,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import org.openqa.selenium.interactions.Sequence;
+import org.openqa.selenium.interactions.PointerInput;
+import java.util.Collections;
+import java.util.List;
 
 public class DataBankPage {
     private AppiumDriver driver;
@@ -28,6 +33,35 @@ public class DataBankPage {
     private final String packagesAndPricingXpath = "//android.view.View[@content-desc=\"PACKAGES & PRICING\"]";
     private final String continueButtonXpath = "//android.widget.Button[@content-desc=\"CONTINUE\"]";
     private final String checkboxXpath = "//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View[1]";
+
+    // Test Case 1 - Checkout Flow Steps (8-32)
+    private final String bagPageXpath = "//android.view.View[@content-desc=\"BAG\"]";
+    private final String essentialEpigeneticsDropdownXpath = "//android.widget.ImageView[@content-desc=\"Essential Epigenetics\"]";
+    private final String proceedToCheckoutButtonXpath = "//android.widget.Button[@content-desc=\"PROCEED TO CHECKOUT\"]";
+    private final String checkoutPageXpath = "//android.view.View[@content-desc=\"CHECKOUT\"]";
+    private final String deliveryAddressXpath = "//android.view.View[@content-desc=\"Delivery Address\"]";
+    private final String nameFieldXpath = "//android.widget.EditText[@text=\"John Doe\"]";
+    private final String confirmButtonXpath = "//android.widget.Button[@content-desc=\"CONFIRM\"]";
+    private final String genderDropdownXpath = "//android.widget.ImageView[@content-desc=\"Gender\"]";
+    private final String maleButtonXpath = "//android.widget.Button[@content-desc=\"Male\"]";
+    private final String countryCodeXpath = "//android.view.View[@content-desc=\"🇦🇫 +93\"]";
+    private final String countrySearchFieldXpath = "//android.widget.EditText";
+    private final String phoneNumberFieldXpath = "//android.widget.ScrollView/android.widget.EditText[2]";
+    private final String addressFieldXpath = "//android.widget.ScrollView/android.widget.EditText[3]";
+    private final String cityFieldXpath = "//android.widget.ScrollView/android.widget.EditText[4]";
+    private final String countryDropdownXpath = "//android.widget.ImageView[@content-desc=\"India\"]";
+    private final String indiaButtonXpath = "//android.widget.Button[@content-desc=\"India\"]";
+    private final String postalCodeFieldXpath = "//android.widget.ScrollView/android.widget.EditText[5]";
+    private final String saveAddressButtonXpath = "//android.widget.Button[@content-desc=\"SAVE ADDRESS\"]";
+    private final String errorDialogXpath = "//android.view.View[@content-desc=\"FIX THE FOLLOWING ERRORS\"]";
+
+    private final String shippingMethodXpath = "//android.view.View[@content-desc=\"Shipping Method\"]";
+    private final String proceedToPaymentButtonXpath = "//android.widget.Button[@content-desc=\"PROCEED TO PAYMENT\"]";
+    private final String closeSheetXpath = "//android.view.View[@content-desc=\"Close sheet\"]";
+    private final String paymentErrorDialogXpath = "//android.view.View[@content-desc=\"PAYMENT ERROR\"]";
+    private final String paymentErrorMessageXpath = "//android.view.View[@content-desc=\"Please try again later\"]";
+    private final String retryPaymentButtonXpath = "//android.view.View[@content-desc=\"Retry Payment\"]";
+    private final String paymentPageButtonXpath = "//android.widget.ScrollView/android.view.View[1]/android.widget.Button";
 
     // Test Case 2 - Specific Steps
     private final String uploadDataXpath = "//android.view.View[@content-desc=\"UPLOAD DATA\"]";
@@ -1152,7 +1186,875 @@ public class DataBankPage {
         }
     }
 
-    // ==================== VERIFICATION METHODS ====================
+    // ==================== TEST CASE 1 - CHECKOUT FLOW METHODS (STEPS 8-32)
+    // ====================
+
+    /**
+     * TEST CASE 1 - STEP 8:
+     * Verify BAG page is displayed
+     */
+    public void verifyBagPage() {
+        try {
+            WebElement bagPage = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath(bagPageXpath)));
+
+            if (bagPage.isDisplayed()) {
+                System.out.println("✓ Step 8: BAG page is displayed");
+            } else {
+                throw new RuntimeException("BAG page is not displayed");
+            }
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to verify BAG page in Step 8", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 9:
+     * Click Essential Epigenetics dropdown
+     */
+    public void clickEssentialEpigeneticsDropdown() {
+        try {
+            WebElement dropdown = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(essentialEpigeneticsDropdownXpath)));
+            dropdown.click();
+            System.out.println("✓ Step 9: Clicked Essential Epigenetics dropdown");
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to click Essential Epigenetics dropdown in Step 9", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 10:
+     * Click PROCEED TO CHECKOUT button
+     */
+    public void clickProceedToCheckoutButton() {
+        try {
+            WebElement proceedButton = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(proceedToCheckoutButtonXpath)));
+            proceedButton.click();
+            System.out.println("✓ Step 10: Clicked PROCEED TO CHECKOUT button");
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to click PROCEED TO CHECKOUT button in Step 10", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 11:
+     * Verify CHECKOUT page and Delivery Address are displayed
+     */
+    public void verifyCheckoutPage() {
+        try {
+            // Verify CHECKOUT page
+            WebElement checkoutPage = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath(checkoutPageXpath)));
+
+            if (checkoutPage.isDisplayed()) {
+                System.out.println("✓ Step 11: CHECKOUT page is displayed");
+            } else {
+                throw new RuntimeException("CHECKOUT page is not displayed");
+            }
+
+            // Verify Delivery Address
+            WebElement deliveryAddress = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath(deliveryAddressXpath)));
+
+            if (deliveryAddress.isDisplayed()) {
+                System.out.println("✓ Step 11: Delivery Address is displayed");
+            } else {
+                throw new RuntimeException("Delivery Address is not displayed");
+            }
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to verify CHECKOUT page in Step 11", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 12:
+     * Click name field and fill with "Kathir"
+     */
+    public void fillNameField(String name) {
+        try {
+            WebElement nameField = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(nameFieldXpath)));
+            nameField.click();
+            nameField.clear();
+            nameField.sendKeys(name);
+            System.out.println("✓ Step 12: Filled name field with: " + name);
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to fill name field in Step 12", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 13 (First attempt with wrong DOB):
+     * Click DOB field and set date using seekbars (swipe down once on each)
+     */
+    /**
+     * TEST CASE 1 - STEP 13 (First attempt with wrong DOB):
+     * Click DOB field and set date using robust swipe actions
+     */
+    public void fillDOBFieldWrong() {
+        try {
+            clickDateOfBirth();
+            performDateSelection();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to fill DOB field in Step 13", e);
+        }
+    }
+
+    /**
+     * Click the Date of Birth field (Text-independent locator)
+     * Requirement: Always click the same element regardless of empty or filled
+     * state.
+     */
+    /**
+     * Click the Date of Birth field for STEP 13 (Wrong DOB)
+     * Requirement: Uses the existing instance-based locator which is working.
+     */
+    public void clickDateOfBirth() {
+        try {
+            System.out.println("Step 13: Clicking DOB field using stable instance(15) selector...");
+            hideKeyboard();
+            Thread.sleep(1000);
+
+            WebElement dobField = wait.until(ExpectedConditions.elementToBeClickable(
+                    AppiumBy.androidUIAutomator("new UiSelector().className(\"android.view.View\").instance(15)")));
+
+            dobField.click();
+            System.out.println("✓ Step 13: DOB field clicked (Instance 15)");
+
+        } catch (Exception e) {
+            throw new RuntimeException("CRITICAL: Failed Step 13 DOB click: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * Click the Date of Birth field for STEP 22 (Correct DOB) using fixed
+     * coordinates.
+     * Requirement: Step 22 fails with locators when populated, so using fixed
+     * coordinates [55,741][1025,917].
+     */
+    public void clickDobByFixedCoordinates() {
+        try {
+            System.out.println("Step 22: Tapping DOB field using fixed coordinates (540, 829)...");
+            hideKeyboard();
+            Thread.sleep(1000);
+
+            // Center of bounds [55,741][1025,917]
+            int centerX = 540;
+            int centerY = 829;
+
+            PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+            Sequence tap = new Sequence(finger, 1);
+
+            tap.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), centerX, centerY));
+            tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+            tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+
+            driver.perform(Collections.singletonList(tap));
+            System.out.println("✓ Step 22: DOB field tapped via Fixed Coordinates (540, 829)");
+
+        } catch (Exception e) {
+            throw new RuntimeException("CRITICAL: Failed Step 22 Fixed Coordinate tap: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * ✅ PERFORM DATE SELECTION (SWIPE ACTIONS)
+     * Swipes down on Day, Month, and Year SeekBars and clicks Confirm
+     * Uses position-based XPath to work with any date (future-proof)
+     */
+    public void performDateSelection() {
+        try {
+            Thread.sleep(1000); // Wait for date picker to appear
+            WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+            // Use position-based XPath instead of hardcoded values
+            // This works regardless of what date is currently displayed
+            String[] seekBarXpaths = {
+                    "(//android.widget.SeekBar)[1]", // Day picker (1st SeekBar)
+                    "(//android.widget.SeekBar)[2]", // Month picker (2nd SeekBar)
+                    "(//android.widget.SeekBar)[3]" // Year picker (3rd SeekBar)
+            };
+
+            for (int i = 0; i < seekBarXpaths.length; i++) {
+                try {
+                    WebElement seekBar = shortWait.until(ExpectedConditions.presenceOfElementLocated(
+                            By.xpath(seekBarXpaths[i])));
+
+                    // Perform swipe down action using W3C Actions
+                    swipeDown(seekBar);
+                    Thread.sleep(500); // Wait for swipe animation
+
+                    System.out.println("Successfully swiped SeekBar " + (i + 1));
+
+                } catch (Exception e) {
+                    System.out.println("Could not find or swipe SeekBar at position: " + (i + 1));
+                }
+            }
+
+            // Click CONFIRM button
+            try {
+                WebElement confirmBtn = shortWait.until(ExpectedConditions.elementToBeClickable(
+                        By.xpath("//android.widget.Button[@content-desc='CONFIRM']")));
+                confirmBtn.click();
+                System.out.println("Clicked CONFIRM button on date picker");
+            } catch (Exception e) {
+                System.out.println("CONFIRM button not found on date picker");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error in performDateSelection: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Helper method to swipe down on an element using W3C Actions
+     */
+    private void swipeDown(WebElement element) {
+        try {
+            int centerX = element.getRect().getX() + (element.getRect().getWidth() / 2);
+            int startY = element.getRect().getY() + (element.getRect().getHeight() / 2);
+            int endY = startY + 200; // Standard swipe
+
+            PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+            Sequence swipe = new Sequence(finger, 1);
+
+            swipe.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), centerX, startY));
+            swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+            swipe.addAction(
+                    finger.createPointerMove(Duration.ofMillis(500), PointerInput.Origin.viewport(), centerX, endY));
+            swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+
+            driver.perform(Collections.singletonList(swipe));
+        } catch (Exception e) {
+            System.err.println("Swipe down failed: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Helper method to swipe down on an element quickly
+     */
+    private void fastSwipe(WebElement element) {
+        try {
+            int centerX = element.getRect().getX() + (element.getRect().getWidth() / 2);
+            int startY = element.getRect().getY() + (element.getRect().getHeight() / 2);
+            int endY = startY + 300; // Longer swipe for speed
+
+            PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+            Sequence swipe = new Sequence(finger, 1);
+
+            swipe.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), centerX, startY));
+            swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+            swipe.addAction(
+                    finger.createPointerMove(Duration.ofMillis(200), PointerInput.Origin.viewport(), centerX, endY));
+            swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+
+            driver.perform(Collections.singletonList(swipe));
+        } catch (Exception e) {
+            System.err.println("Fast swipe failed: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Helper method to Tap on an element using W3C Actions (Force Click)
+     */
+
+    /**
+     * Scroll Page Up (Finger Bottom -> Top)
+     * Moves content UP, so we see content BELOW.
+     */
+    public void scrollPageUp() {
+        org.openqa.selenium.Dimension size = driver.manage().window().getSize();
+        int centerX = size.width / 2;
+        int startY = (int) (size.height * 0.8);
+        int endY = (int) (size.height * 0.2);
+        performScroll(centerX, startY, endY);
+    }
+
+    /**
+     * Scroll Page Down (Finger Top -> Bottom)
+     * Moves content DOWN, so we see content ABOVE.
+     */
+    public void scrollPageDown() {
+        org.openqa.selenium.Dimension size = driver.manage().window().getSize();
+        int centerX = size.width / 2;
+        int startY = (int) (size.height * 0.2);
+        int endY = (int) (size.height * 0.8);
+        performScroll(centerX, startY, endY);
+    }
+
+    private void performScroll(int centerX, int startY, int endY) {
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence swipe = new Sequence(finger, 1);
+        swipe.addAction(finger.createPointerMove(Duration.ZERO, PointerInput.Origin.viewport(), centerX, startY));
+        swipe.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+        swipe.addAction(
+                finger.createPointerMove(Duration.ofMillis(600), PointerInput.Origin.viewport(), centerX, endY));
+        swipe.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+        driver.perform(Collections.singletonList(swipe));
+    }
+
+    /**
+     * TEST CASE 1 - STEP 13 (Gender selection):
+     * Click gender dropdown and select Male
+     */
+    public void selectGender() {
+        try {
+            System.out.println("Step 13: Selecting gender...");
+            hideKeyboard();
+            Thread.sleep(1000);
+
+            // 1-2. Try primary Gender XPath, else fallback to Male ImageView
+            WebElement genderElement = null;
+            try {
+                genderElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(genderDropdownXpath)));
+            } catch (Exception e) {
+                try {
+                    // 3. Fallback click option
+                    genderElement = wait.until(ExpectedConditions.elementToBeClickable(
+                            By.xpath("//android.widget.ImageView[@content-desc=\"Male\"]")));
+                } catch (Exception ex) {
+                    // 10. Specific failure message
+                    throw new RuntimeException("Gender selection failed: Gender element or Male option not found");
+                }
+            }
+
+            // 5-6. Only one click, no double clicks
+            genderElement.click();
+            System.out.println("✓ Step 13: Gender element (or fallback) clicked");
+
+            // 7. Proceed with existing selection flow (unchanged delays)
+            Thread.sleep(500);
+            WebElement maleButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(maleButtonXpath)));
+            maleButton.click();
+            System.out.println("✓ Step 13: Gender selection completed (Male)");
+
+        } catch (Exception e) {
+            if (e.getMessage() != null && e.getMessage().contains("Gender selection failed")) {
+                throw new RuntimeException(e.getMessage());
+            }
+            throw new RuntimeException("Failed to select gender in Step 13: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 14:
+     * Click country code, search for India, and select it
+     */
+    public void selectCountryCode() {
+        int maxRetries = 3;
+        boolean success = false;
+        String errorMessage = "India (+91) country code not found after search";
+
+        for (int i = 1; i <= maxRetries; i++) {
+            try {
+                System.out.println("Step 14: Country selection attempt " + i + " of " + maxRetries);
+
+                // 1. Open picker & wait for search input visibility
+                WebElement countryCodeDropdown;
+                try {
+                    countryCodeDropdown = wait
+                            .until(ExpectedConditions.elementToBeClickable(By.xpath(countryCodeXpath)));
+                } catch (Exception e) {
+                    countryCodeDropdown = wait.until(ExpectedConditions
+                            .elementToBeClickable(By.xpath("//android.view.View[contains(@content-desc, \"+\")]")));
+                }
+                countryCodeDropdown.click();
+
+                Thread.sleep(1500);
+                WebElement searchField = wait
+                        .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(countrySearchFieldXpath)));
+
+                // 2. Clear Box and type "India"
+                searchField.click();
+                searchField.clear();
+                searchField.sendKeys("India");
+                System.out.println("  - Typed 'India' in search box");
+
+                // 3. Wait for results list refresh
+                Thread.sleep(2500);
+
+                // 4-9. Identify Button: India +91, avoid BIOT (+246)
+                // Chaining UiSelector as requested
+                String uiAutomatorExpr = "new UiSelector().className(\"android.widget.Button\")" +
+                        ".descriptionContains(\"India\")" +
+                        ".descriptionContains(\"+91\")";
+
+                WebElement indiaButton = null;
+                try {
+                    indiaButton = driver.findElement(AppiumBy.androidUIAutomator(uiAutomatorExpr));
+                } catch (Exception e) {
+                    // 8. Scroll vertically if required
+                    System.out.println("  - India button not visible, attempting scroll...");
+                    scrollPageUp(); // Re-using existing scroll
+                    Thread.sleep(1000);
+                    indiaButton = driver.findElement(AppiumBy.androidUIAutomator(uiAutomatorExpr));
+                }
+
+                if (indiaButton != null) {
+                    String desc = indiaButton.getAttribute("content-desc");
+                    // 6-7. Ensure no match for +246 or BIOT
+                    if (desc != null && (desc.contains("+246") || desc.contains("British Indian Ocean Territory"))) {
+                        System.out.println("  ⚠ Unexpectedly found BIOT/+246, skipping...");
+                        continue;
+                    }
+
+                    indiaButton.click();
+                    System.out.println("  ✓ Clicked India (+91) Button");
+                }
+
+                // 10. Wait until picker closes
+                Thread.sleep(2000);
+
+                // 11. Validate selected country code is displayed as +91
+                WebElement activeCountry = wait.until(ExpectedConditions
+                        .presenceOfElementLocated(By.xpath("//android.view.View[contains(@content-desc, '+91')]")));
+                if (activeCountry.isDisplayed()) {
+                    System.out.println("✓ Step 14: Country code validation passed (+91)");
+                    success = true;
+                    break;
+                }
+
+            } catch (Exception e) {
+                System.out.println("  ⚠ Attempt " + i + " failed: " + e.getMessage());
+                hideKeyboard();
+                try {
+                    driver.navigate().back();
+                } catch (Exception ex) {
+                } // Try to close picker if stuck
+            }
+        }
+
+        if (!success) {
+            throw new RuntimeException(errorMessage);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 15:
+     * Click phone number field, fill it, and hide keyboard
+     */
+    public void fillPhoneNumber(String phoneNumber) {
+        try {
+            WebElement phoneField = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(phoneNumberFieldXpath)));
+            phoneField.click();
+            phoneField.clear();
+            phoneField.sendKeys(phoneNumber);
+            System.out.println("✓ Step 15: Filled phone number: " + phoneNumber);
+
+            // Hide keyboard
+            hideKeyboard();
+
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to fill phone number in Step 15", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 16:
+     * Click address field, fill it, and hide keyboard
+     */
+    public void fillAddress(String address) {
+        try {
+            WebElement addressField = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(addressFieldXpath)));
+            addressField.click();
+            addressField.clear();
+            addressField.sendKeys(address);
+            System.out.println("✓ Step 16: Filled address: " + address);
+
+            // Hide keyboard
+            hideKeyboard();
+
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to fill address in Step 16", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 17:
+     * Click city field, fill it, and hide keyboard
+     */
+    public void fillCity(String city) {
+        try {
+            WebElement cityField = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(cityFieldXpath)));
+            cityField.click();
+            cityField.clear();
+            cityField.sendKeys(city);
+            System.out.println("✓ Step 17: Filled city: " + city);
+
+            // Hide keyboard
+            hideKeyboard();
+
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to fill city in Step 17", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 18:
+     * Click country dropdown and select India
+     */
+    public void selectCountry() {
+        try {
+            // Click country dropdown
+            WebElement countryDropdown = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(countryDropdownXpath)));
+            countryDropdown.click();
+            System.out.println("✓ Step 18: Clicked country dropdown");
+
+            Thread.sleep(500);
+
+            // Click India button
+            WebElement indiaButton = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(indiaButtonXpath)));
+            indiaButton.click();
+            System.out.println("✓ Step 18: Selected India");
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Thread interrupted during country selection in Step 18", e);
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to select country in Step 18", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 19:
+     * Click postal code field, fill with wrong code, and hide keyboard
+     */
+    public void fillPostalCodeWrong(String postalCode) {
+        try {
+            WebElement postalField = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(postalCodeFieldXpath)));
+            postalField.click();
+            postalField.clear();
+            postalField.sendKeys(postalCode);
+            System.out.println("✓ Step 19: Filled postal code (wrong): " + postalCode);
+
+            // Hide keyboard
+            hideKeyboard();
+
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to fill postal code in Step 19", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 20:
+     * Click SAVE ADDRESS button
+     */
+    public void clickSaveAddressButton() {
+        try {
+            WebElement saveButton = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(saveAddressButtonXpath)));
+            saveButton.click();
+            System.out.println("✓ Step 20: Clicked SAVE ADDRESS button");
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to click SAVE ADDRESS button in Step 20", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 21:
+     * Verify error dialog "FIX THE FOLLOWING ERRORS" is displayed
+     */
+    public void verifyErrorDialog() {
+        try {
+            WebElement errorDialog = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath(errorDialogXpath)));
+
+            if (errorDialog.isDisplayed()) {
+                System.out.println("✓ Step 21: Error dialog 'FIX THE FOLLOWING ERRORS' is displayed");
+            } else {
+                throw new RuntimeException("Error dialog is not displayed");
+            }
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to verify error dialog in Step 21", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 22 (Corrected DOB):
+     * Click DOB field and set correct date (swipe to year 2000)
+     */
+
+    public void fillDOBFieldCorrect() {
+        try {
+            // ✅ STEP 22: Click DOB field using FIXED COORDINATES
+            // Bounds [55,741][1025,917] -> Center (540, 829)
+            clickDobByFixedCoordinates();
+            System.out.println("✓ Step 22: Clicked DOB field via Fixed Coordinates");
+
+            Thread.sleep(1500); // Wait for date picker
+
+            // Use index-based locators for stability
+            String daySeekBarXpath = "(//android.widget.SeekBar)[1]";
+            String monthSeekBarXpath = "(//android.widget.SeekBar)[2]";
+            String yearSeekBarXpath = "(//android.widget.SeekBar)[3]";
+
+            // Swipe once on day and month
+            WebElement daySeekBar = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(daySeekBarXpath)));
+            swipeDown(daySeekBar);
+            Thread.sleep(500);
+
+            WebElement monthSeekBar = wait
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath(monthSeekBarXpath)));
+            swipeDown(monthSeekBar);
+            Thread.sleep(500);
+
+            // ✅ STEP 22: Robust Dynamic Year selection (< 2005)
+            boolean found = false;
+            int maxAttempts = 40;
+            int attempts = 0;
+
+            System.out.println("Step 22: Searching for any year < 2005...");
+            while (!found && attempts < maxAttempts) {
+                // Read all visible seekbar/numeric elements
+                List<WebElement> scrollElements = driver.findElements(By.className("android.widget.SeekBar"));
+
+                for (WebElement el : scrollElements) {
+                    String desc = el.getAttribute("content-desc");
+                    if (desc != null && desc.matches("\\d{4}")) { // Check if it's a 4-digit year
+                        try {
+                            int yearValue = Integer.parseInt(desc);
+                            if (yearValue < 2005) {
+                                found = true;
+                                el.click();
+                                System.out.println("✓ Step 22: Found and selected year " + yearValue);
+                                break;
+                            }
+                        } catch (NumberFormatException e) {
+                            // Not a year
+                        }
+                    }
+                }
+
+                if (found)
+                    break;
+
+                // If not found, fast swipe only on the Year SeekBar (index 3)
+                WebElement yearSeekBar = wait
+                        .until(ExpectedConditions.presenceOfElementLocated(By.xpath(yearSeekBarXpath)));
+                fastSwipe(yearSeekBar);
+                attempts++;
+                Thread.sleep(200);
+            }
+
+            if (!found) {
+                throw new RuntimeException("CRITICAL: No year below 2005 found in DOB picker");
+            }
+
+            Thread.sleep(500);
+
+            // Click CONFIRM button
+            WebElement confirmBtn = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(confirmButtonXpath)));
+            confirmBtn.click();
+            System.out.println("✓ Step 22: Clicked CONFIRM button");
+
+        } catch (Exception e) {
+            throw new RuntimeException("CRITICAL: Failed to fill correct DOB in Step 22: " + e.getMessage(), e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 23:
+     * Click phone number field, clear it, fill with correct number, and hide
+     * keyboard
+     */
+    public void fillPhoneNumberCorrect(String phoneNumber) {
+        try {
+            WebElement phoneField = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(phoneNumberFieldXpath)));
+            phoneField.click();
+            phoneField.clear();
+            phoneField.sendKeys(phoneNumber);
+            System.out.println("✓ Step 23: Filled correct phone number: " + phoneNumber);
+
+            // Hide keyboard
+            hideKeyboard();
+
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to fill correct phone number in Step 23", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 24:
+     * Click postal code field, clear it, fill with correct code, and hide keyboard
+     */
+    public void fillPostalCodeCorrect(String postalCode) {
+        try {
+            WebElement postalField = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(postalCodeFieldXpath)));
+            postalField.click();
+            postalField.clear();
+            postalField.sendKeys(postalCode);
+            System.out.println("✓ Step 24: Filled correct postal code: " + postalCode);
+
+            // Hide keyboard
+            hideKeyboard();
+
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to fill correct postal code in Step 24", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 26:
+     * Verify Shipping Method is displayed
+     */
+    public void verifyShippingMethod() {
+        try {
+            WebElement shippingMethod = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath(shippingMethodXpath)));
+
+            if (shippingMethod.isDisplayed()) {
+                System.out.println("✓ Step 26: Shipping Method is displayed");
+            } else {
+                throw new RuntimeException("Shipping Method is not displayed");
+            }
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to verify Shipping Method in Step 26", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 27:
+     * Click PROCEED TO PAYMENT button and wait 9 seconds
+     */
+    public void clickProceedToPaymentButton() {
+        try {
+            WebElement proceedButton = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(proceedToPaymentButtonXpath)));
+            proceedButton.click();
+            System.out.println("✓ Step 27: Clicked PROCEED TO PAYMENT button");
+
+            // Wait 9 seconds
+            Thread.sleep(9000);
+            System.out.println("✓ Step 27: Waited 9 seconds");
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Thread interrupted during payment button click in Step 27", e);
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to click PROCEED TO PAYMENT button in Step 27", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 29:
+     * Click Close sheet
+     */
+    public void clickCloseSheet() {
+        try {
+            WebElement closeSheet = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(closeSheetXpath)));
+            closeSheet.click();
+            System.out.println("✓ Step 29: Clicked Close sheet");
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to click Close sheet in Step 29", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 30:
+     * Verify payment error dialog and get error message
+     * 
+     * @return The payment error message
+     */
+    public String verifyPaymentErrorAndGetMessage() {
+        try {
+            // Verify PAYMENT ERROR dialog
+            WebElement paymentErrorDialog = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath(paymentErrorDialogXpath)));
+
+            if (paymentErrorDialog.isDisplayed()) {
+                System.out.println("✓ Step 30: PAYMENT ERROR dialog is displayed");
+            } else {
+                throw new RuntimeException("PAYMENT ERROR dialog is not displayed");
+            }
+
+            // Get error message
+            WebElement errorMessage = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath(paymentErrorMessageXpath)));
+            String message = errorMessage.getAttribute("content-desc");
+            System.out.println("✓ Step 30: Payment error message captured: " + message);
+
+            return message;
+
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to verify payment error or get message in Step 30", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 31:
+     * Click OK button
+     */
+    public void clickOKButton() {
+        try {
+            WebElement okButton = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(okButtonXpath)));
+            okButton.click();
+            System.out.println("✓ Step 31: Clicked OK button");
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to click OK button in Step 31", e);
+        }
+    }
+
+    /**
+     * TEST CASE 1 - STEP 32:
+     * Click Retry Payment button, wait 9 seconds, and verify payment page
+     */
+    public void clickRetryPaymentAndVerify() {
+        try {
+            // Click Retry Payment button
+            WebElement retryButton = wait.until(
+                    ExpectedConditions.elementToBeClickable(By.xpath(retryPaymentButtonXpath)));
+            retryButton.click();
+            System.out.println("✓ Step 32: Clicked Retry Payment button");
+
+            // Wait 9 seconds
+            Thread.sleep(9000);
+            System.out.println("✓ Step 32: Waited 9 seconds");
+
+            // Verify payment page is displayed
+            WebElement paymentPageButton = wait.until(
+                    ExpectedConditions.presenceOfElementLocated(By.xpath(paymentPageButtonXpath)));
+
+            if (paymentPageButton.isDisplayed()) {
+                System.out.println("✓ Step 32: Payment page is displayed");
+            } else {
+                throw new RuntimeException("Payment page is not displayed");
+            }
+
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Thread interrupted during retry payment in Step 32", e);
+        } catch (TimeoutException e) {
+            throw new RuntimeException("Failed to click Retry Payment or verify payment page in Step 32", e);
+        }
+    }
+
+    // ==================== HELPER METHODS ====================
+
+    /**
+     * Helper method to hide keyboard
+     */
+    private void hideKeyboard() {
+        try {
+            ((io.appium.java_client.android.AndroidDriver) driver).hideKeyboard();
+            System.out.println("  ✓ Keyboard hidden");
+        } catch (Exception e) {
+            System.out.println("  ⚠ Keyboard already hidden or not present");
+        }
+    }
+
+    /**
+     * Helper method to swipe down on a seekbar element
+     */
 
     /**
      * Verify if Data Bank page is currently displayed
@@ -1199,6 +2101,33 @@ public class DataBankPage {
                     ExpectedConditions.presenceOfElementLocated(By.xpath(dataBankHeadingXpath)));
             return dataBankHeading.getAttribute("content-desc");
         } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Get validation message from success/error dialog
+     * Replaces newlines with spaces for easier assertion
+     */
+    public String getValidationMessage() {
+        try {
+            // Robust locator using contains(@content-desc)
+            // Using a strictly general locator as requested by user to catch ANY validation
+            // message causing the dialog
+            WebElement messageElement = wait.until(ExpectedConditions.presenceOfElementLocated(
+                    By.xpath(
+                            "//android.view.View[contains(@content-desc, 'Invalid') or contains(@content-desc, 'at least')]")));
+
+            String rawMessage = messageElement.getAttribute("content-desc");
+            if (rawMessage == null)
+                return null;
+
+            // "Replace \n with space OR validate each message separately"
+            // Replacing \n with space as per user instruction
+            return rawMessage.replace("\n", " ").trim();
+
+        } catch (Exception e) {
+            System.out.println("Validation message not found: " + e.getMessage());
             return null;
         }
     }

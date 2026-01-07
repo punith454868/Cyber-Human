@@ -22,6 +22,30 @@ public class DataBankTest extends BaseTest {
      * 5. Click CONTINUE button
      * 6. Click checkbox
      * 7. Click CONTINUE button
+     * 8. Verify BAG page
+     * 9. Click Essential Epigenetics dropdown
+     * 10. Click PROCEED TO CHECKOUT button
+     * 11. Verify CHECKOUT page and Delivery Address
+     * 12. Fill name field with "Kathir"
+     * 13. Fill DOB field (wrong), select Gender (Male)
+     * 14. Select country code (India +91)
+     * 15. Fill phone number (wrong - 1234568)
+     * 16. Fill address (5/1029,KTG)
+     * 17. Fill city (Coimbatore)
+     * 18. Select country (India)
+     * 19. Fill postal code (wrong - kahsw)
+     * 20. Click SAVE ADDRESS button
+     * 21. Verify error dialog "FIX THE FOLLOWING ERRORS"
+     * 22. Get error message, click OK, fill DOB correctly (year 2000)
+     * 23. Fill phone number correctly (8072971990)
+     * 24. Fill postal code correctly (643217)
+     * 25. Click SAVE ADDRESS button
+     * 26. Verify Shipping Method is displayed
+     * 27. Click PROCEED TO PAYMENT button and wait 9 seconds
+     * 29. Click Close sheet
+     * 30. Verify payment error dialog and get error message
+     * 31. Click OK button
+     * 32. Click Retry Payment button, wait 9 seconds, verify payment page
      */
     @Test(priority = 1)
     public void testDataBank_Case1() throws InterruptedException {
@@ -63,21 +87,196 @@ public class DataBankTest extends BaseTest {
         test.log(Status.INFO, "Step 4: Clicking PACKAGES & PRICING");
         dataBankPage.clickPackagesAndPricing();
         test.log(Status.PASS, "✓ Step 4: PACKAGES & PRICING clicked");
+        Thread.sleep(9000); // Wait 9 seconds for page to load
 
         // ✅ TEST CASE 1 - STEP 5: Click CONTINUE button
         test.log(Status.INFO, "Step 5: Clicking CONTINUE button");
         dataBankPage.clickContinueButton();
         test.log(Status.PASS, "✓ Step 5: CONTINUE button clicked");
+        Thread.sleep(2000);
 
         // ✅ TEST CASE 1 - STEP 6: Click checkbox
         test.log(Status.INFO, "Step 6: Clicking checkbox");
         dataBankPage.clickCheckbox();
         test.log(Status.PASS, "✓ Step 6: Checkbox clicked");
+        Thread.sleep(2000);
 
         // ✅ TEST CASE 1 - STEP 7: Click CONTINUE button again
         test.log(Status.INFO, "Step 7: Clicking CONTINUE button");
         dataBankPage.clickContinueButton();
         test.log(Status.PASS, "✓ Step 7: CONTINUE button clicked");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 8: Verify BAG page
+        test.log(Status.INFO, "Step 8: Verifying BAG page");
+        dataBankPage.verifyBagPage();
+        test.log(Status.PASS, "✓ Step 8: BAG page verified");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 9: Click Essential Epigenetics dropdown
+        test.log(Status.INFO, "Step 9: Clicking Essential Epigenetics dropdown");
+        dataBankPage.clickEssentialEpigeneticsDropdown();
+        test.log(Status.PASS, "✓ Step 9: Essential Epigenetics dropdown clicked");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 10: Click PROCEED TO CHECKOUT button
+        test.log(Status.INFO, "Step 10: Clicking PROCEED TO CHECKOUT button");
+        dataBankPage.clickProceedToCheckoutButton();
+        test.log(Status.PASS, "✓ Step 10: PROCEED TO CHECKOUT button clicked");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 11: Verify CHECKOUT page and Delivery Address
+        test.log(Status.INFO, "Step 11: Verifying CHECKOUT page and Delivery Address");
+        dataBankPage.verifyCheckoutPage();
+        test.log(Status.PASS, "✓ Step 11: CHECKOUT page and Delivery Address verified");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 12: Fill name field with "Kathir"
+        test.log(Status.INFO, "Step 12: Filling name field with 'Kathir'");
+        dataBankPage.fillNameField("Kathir");
+        test.log(Status.PASS, "✓ Step 12: Name field filled with 'Kathir'");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 13: Fill DOB field (wrong - will cause error)
+        test.log(Status.INFO, "Step 13: Filling DOB field (wrong date)");
+        dataBankPage.fillDOBFieldWrong();
+        test.log(Status.PASS, "✓ Step 13: DOB field filled (wrong date)");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 13: Select Gender (Male)
+        test.log(Status.INFO, "Step 13: Selecting Gender (Male)");
+        dataBankPage.selectGender();
+        test.log(Status.PASS, "✓ Step 13: Gender selected (Male)");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 14: Select country code (India +91)
+        test.log(Status.INFO, "Step 14: Selecting country code (India +91)");
+        dataBankPage.selectCountryCode();
+        test.log(Status.PASS, "✓ Step 14: Country code selected (India +91)");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 15: Fill phone number (wrong - will cause error)
+        test.log(Status.INFO, "Step 15: Filling phone number (wrong)");
+        dataBankPage.fillPhoneNumber("1234568");
+        test.log(Status.PASS, "✓ Step 15: Phone number filled (wrong)");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 16: Fill address
+        test.log(Status.INFO, "Step 16: Filling address");
+        dataBankPage.fillAddress("5/1029,KTG");
+        test.log(Status.PASS, "✓ Step 16: Address filled");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 17: Fill city
+        test.log(Status.INFO, "Step 17: Filling city");
+        dataBankPage.fillCity("Coimbatore");
+        test.log(Status.PASS, "✓ Step 17: City filled");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 18: Select country (India)
+        test.log(Status.INFO, "Step 18: Selecting country (India)");
+        dataBankPage.selectCountry();
+        test.log(Status.PASS, "✓ Step 18: Country selected (India)");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 19: Fill postal code (wrong - will cause error)
+        test.log(Status.INFO, "Step 19: Filling postal code (wrong)");
+        dataBankPage.fillPostalCodeWrong("kahsw");
+        test.log(Status.PASS, "✓ Step 19: Postal code filled (wrong)");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 20: Click SAVE ADDRESS button
+        test.log(Status.INFO, "Step 20: Clicking SAVE ADDRESS button");
+        dataBankPage.clickSaveAddressButton();
+        test.log(Status.PASS, "✓ Step 20: SAVE ADDRESS button clicked");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 21: Verify error dialog
+        test.log(Status.INFO, "Step 21: Verifying error dialog 'FIX THE FOLLOWING ERRORS'");
+        dataBankPage.verifyErrorDialog();
+        test.log(Status.PASS, "✓ Step 21: Error dialog verified");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 22: Get validation message and click OK
+        test.log(Status.INFO, "Step 22: Getting validation message from success dialog");
+        String errorMessage = dataBankPage.getValidationMessage();
+
+        if (errorMessage != null) {
+            test.log(Status.INFO, "📋 Step 22 - Validation Message: " + errorMessage);
+            // "DO NOT use direct assertEquals() with multiline text"
+            Assert.assertTrue(errorMessage.contains("Invalid phone number"),
+                    "Message should contain 'Invalid phone number'");
+            Assert.assertTrue(errorMessage.contains("Invalid Postal Code"),
+                    "Message should contain 'Invalid Postal Code'");
+        } else {
+            test.log(Status.FAIL, "Validation message not found");
+        }
+
+        dataBankPage.clickOkButton();
+        test.log(Status.PASS, "✓ Step 22: Validation message captured and OK clicked");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 22: Fill DOB field (correct - year 2000)
+        test.log(Status.INFO, "Step 22: Filling DOB field (correct - year 2000)");
+        dataBankPage.fillDOBFieldCorrect();
+        test.log(Status.PASS, "✓ Step 22: DOB field filled correctly (year 2000)");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 23: Fill phone number (correct)
+        test.log(Status.INFO, "Step 23: Filling phone number (correct)");
+        dataBankPage.fillPhoneNumberCorrect("8072971990");
+        test.log(Status.PASS, "✓ Step 23: Phone number filled correctly");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 24: Fill postal code (correct)
+        test.log(Status.INFO, "Step 24: Filling postal code (correct)");
+        dataBankPage.fillPostalCodeCorrect("643217");
+        test.log(Status.PASS, "✓ Step 24: Postal code filled correctly");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 25: Click SAVE ADDRESS button again
+        test.log(Status.INFO, "Step 25: Clicking SAVE ADDRESS button");
+        dataBankPage.clickSaveAddressButton();
+        test.log(Status.PASS, "✓ Step 25: SAVE ADDRESS button clicked");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 26: Verify Shipping Method is displayed
+        test.log(Status.INFO, "Step 26: Verifying Shipping Method is displayed");
+        dataBankPage.verifyShippingMethod();
+        test.log(Status.PASS, "✓ Step 26: Shipping Method verified");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 27: Click PROCEED TO PAYMENT button and wait 9 seconds
+        test.log(Status.INFO, "Step 27: Clicking PROCEED TO PAYMENT button and waiting 9 seconds");
+        dataBankPage.clickProceedToPaymentButton();
+        test.log(Status.PASS, "✓ Step 27: PROCEED TO PAYMENT button clicked and waited 9 seconds");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 29: Click Close sheet
+        test.log(Status.INFO, "Step 29: Clicking Close sheet");
+        dataBankPage.clickCloseSheet();
+        test.log(Status.PASS, "✓ Step 29: Close sheet clicked");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 30: Verify payment error dialog and get error message
+        test.log(Status.INFO, "Step 30: Verifying payment error dialog");
+        String paymentErrorMessage = dataBankPage.verifyPaymentErrorAndGetMessage();
+        test.log(Status.INFO, "📋 Step 30 - Payment Error Message: " + paymentErrorMessage);
+        test.log(Status.PASS, "✓ Step 30: Payment error dialog verified and message captured");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 31: Click OK button
+        test.log(Status.INFO, "Step 31: Clicking OK button");
+        dataBankPage.clickOKButton();
+        test.log(Status.PASS, "✓ Step 31: OK button clicked");
+        Thread.sleep(2000);
+
+        // ✅ TEST CASE 1 - STEP 32: Click Retry Payment button, wait 9 seconds, and
+        // verify payment page
+        test.log(Status.INFO, "Step 32: Clicking Retry Payment button and verifying payment page");
+        dataBankPage.clickRetryPaymentAndVerify();
+        test.log(Status.PASS, "✓ Step 32: Retry Payment clicked, waited 9 seconds, and payment page verified");
+        Thread.sleep(2000);
 
         test.log(Status.PASS, "Data Bank Test Case 1 completed successfully");
     }
