@@ -703,6 +703,7 @@ public class DataBankTest extends BaseTest {
         test.log(Status.INFO, "Step 17: Clicking EPIGENETIC MAPPING button and verifying PACKAGES & PRICING page");
         dataBankPage.clickEpigeneticMappingAndVerifyPackagesPage();
         test.log(Status.PASS, "✓ Step 17: EPIGENETIC MAPPING clicked and PACKAGES & PRICING page verified");
+        Thread.sleep(9000); // Wait 9 seconds for page to load
 
         // ✅ TEST CASE 4 - STEP 18: Click back button twice (previously step 10)
         test.log(Status.INFO, "Step 18: Clicking back button twice");
