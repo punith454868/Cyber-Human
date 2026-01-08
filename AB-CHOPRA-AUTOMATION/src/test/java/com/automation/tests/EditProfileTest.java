@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 public class EditProfileTest extends BaseTest {
 
     /**
-     * ✅ NEGATIVE TEST DATA FOR EDIT PROFILE
+     * NEGATIVE TEST DATA FOR EDIT PROFILE
      * Test scenarios for Edit Profile page validation
      */
     @DataProvider(name = "negativeEditProfileData")
@@ -30,7 +30,7 @@ public class EditProfileTest extends BaseTest {
     }
 
     /**
-     * ✅ TEST DATA FOR CHANGE PASSWORD
+     * TEST DATA FOR CHANGE PASSWORD
      * Scenarios: Wrong Old Pass, Weak Pass, Same Pass, Valid Change
      */
     @DataProvider(name = "changePasswordData")
@@ -56,7 +56,7 @@ public class EditProfileTest extends BaseTest {
     private static boolean isLoggedIn = false;
 
     /**
-     * ✅ COMPLETE NAVIGATION FLOW TO EDIT PROFILE PAGE (FIRST TEST ONLY)
+     * COMPLETE NAVIGATION FLOW TO EDIT PROFILE PAGE (FIRST TEST ONLY)
      * This method handles the entire navigation from Sign In to Edit Profile
      */
     private void navigateToEditProfileFirstTime() throws InterruptedException {
@@ -117,7 +117,7 @@ public class EditProfileTest extends BaseTest {
     }
 
     /**
-     * ✅ NAVIGATION FROM HOMEPAGE TO EDIT PROFILE (SUBSEQUENT TESTS)
+     * NAVIGATION FROM HOMEPAGE TO EDIT PROFILE (SUBSEQUENT TESTS)
      * This method starts from Homepage and navigates to Edit Profile
      * Used for all tests after the first one
      */
@@ -149,11 +149,11 @@ public class EditProfileTest extends BaseTest {
     }
 
     /**
-     * ✅ SMART NAVIGATION - First test does full flow, subsequent tests start from
+     * SMART NAVIGATION - First test does full flow, subsequent tests start from
      * home. Also handles recovery if app is already on Edit Profile page.
      */
     private void navigateToEditProfile() throws InterruptedException {
-        // 🆕 STATE CHECK: If we are already on Edit Profile Page (from previous failed
+        // STATE CHECK: If we are already on Edit Profile Page (from previous failed
         // test),
         // we should navigate back to start fresh from Profile Page
         try {
@@ -177,7 +177,7 @@ public class EditProfileTest extends BaseTest {
     }
 
     /**
-     * ✅ NAVIGATE TO CHANGE PASSWORD PAGE
+     * NAVIGATE TO CHANGE PASSWORD PAGE
      * Ensures we are on the Change Password page, navigating from Edit Profile if
      * needed.
      */
@@ -233,7 +233,7 @@ public class EditProfileTest extends BaseTest {
     }
 
     /**
-     * ✅ TEST CHANGE PASSWORD SCENARIOS
+     * TEST CHANGE PASSWORD SCENARIOS
      * Covers Negative (Wrong, Weak, Same) and Positive (Success) scenarios
      */
     @Test(dataProvider = "changePasswordData", priority = 1)
@@ -319,7 +319,7 @@ public class EditProfileTest extends BaseTest {
     }
 
     /**
-     * ✅ RUNTIME-BASED NEGATIVE TEST FOR EDIT PROFILE
+     * RUNTIME-BASED NEGATIVE TEST FOR EDIT PROFILE
      * 
      * Test Flow:
      * 1. Navigate from Sign In through all pages to Edit Profile
@@ -349,20 +349,20 @@ public class EditProfileTest extends BaseTest {
             editProfilePage.enterEmail(email);
             test.log(Status.INFO, "Entered email: '" + email + "'");
 
-            // ✅ HANDLE DATE OF BIRTH
+            // HANDLE DATE OF BIRTH
             editProfilePage.clickDateOfBirth();
             test.log(Status.INFO, "Clicked Date of Birth");
             editProfilePage.performDateSelection();
             test.log(Status.INFO, "Performed Date Selection (Swipe & Confirm)");
 
-            // ✅ HANDLE GENDER (Standardized to Male for negative tests)
+            // HANDLE GENDER (Standardized to Male for negative tests)
             editProfilePage.clickGender();
             test.log(Status.INFO, "Clicked Gender dropdown");
             Thread.sleep(500);
             editProfilePage.selectGender("Male");
             test.log(Status.INFO, "Selected gender: Male");
 
-            // ✅ HANDLE COUNTRY (Standardized to India for negative tests)
+            // HANDLE COUNTRY (Standardized to India for negative tests)
             editProfilePage.clickCountryCode();
             test.log(Status.INFO, "Clicked Country Code dropdown");
             Thread.sleep(500);
@@ -379,13 +379,13 @@ public class EditProfileTest extends BaseTest {
             // Wait for validation to appear
             Thread.sleep(2000);
 
-            // ✅ RUNTIME VALIDATION CHECK (NO HARDCODED MESSAGES)
+            // RUNTIME VALIDATION CHECK (NO HARDCODED MESSAGES)
             boolean validationDetected = editProfilePage.isAnyValidationVisible();
 
             if (validationDetected) {
-                // ✅ PASS: Validation appeared (negative case handled correctly)
+                // PASS: Validation appeared (negative case handled correctly)
 
-                // 🆕 Capture and log the actual runtime validation message
+                // Capture and log the actual runtime validation message
                 String validationMessage = editProfilePage.getValidationMessage();
                 if (validationMessage != null && !validationMessage.trim().isEmpty()) {
                     test.log(Status.INFO, "📋 Validation message displayed: \"" + validationMessage + "\"");
@@ -394,7 +394,7 @@ public class EditProfileTest extends BaseTest {
                 test.log(Status.PASS, "✓ Validation detected at runtime - Negative case handled correctly");
                 test.log(Status.PASS, "Test PASSED: Application showed validation for invalid input");
             } else {
-                // ❌ FAIL: No validation appeared (security/UX issue)
+                // FAIL: No validation appeared (security/UX issue)
                 test.log(Status.FAIL, "✗ NO validation detected at runtime");
                 test.log(Status.FAIL, "Test FAILED: Application did not show any validation for invalid input");
                 Assert.fail("Expected validation to appear for negative test case, but NONE was detected");
@@ -406,7 +406,7 @@ public class EditProfileTest extends BaseTest {
     }
 
     /**
-     * ✅ TEST WITH DATE OF BIRTH, GENDER, AND COUNTRY SELECTION
+     * TEST WITH DATE OF BIRTH, GENDER, AND COUNTRY SELECTION
      * 
      * This test demonstrates handling of:
      * - Date of Birth picker (runtime)

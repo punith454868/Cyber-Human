@@ -70,7 +70,7 @@ public class BaseTest {
                 .timeouts()
                 .implicitlyWait(Duration.ofSeconds(implicitWait));
 
-        // ✅ CONDITIONAL RESET: Skip resetAppToHomePage for tests with custom navigation
+        // CONDITIONAL RESET: Skip resetAppToHomePage for tests with custom navigation
         // EditProfileTest: manages Sign In -> Home -> Edit Profile flow
         // SignInTest: needs to start from Sign In page (logged out state)
         // SignUpTest: needs to start from Sign Up page
@@ -78,7 +78,7 @@ public class BaseTest {
         if (!"EditProfileTest".equals(testClassName) &&
                 !"SignInTest".equals(testClassName) &&
                 !"SignInTest".equals(testClassName)) {
-            // ✅ RESET APP STATE: Navigate to Home page before each test
+            // RESET APP STATE: Navigate to Home page before each test
             // This ensures test independence without requiring re-login
             resetAppToHomePage();
         } else {
@@ -112,7 +112,7 @@ public class BaseTest {
     @AfterMethod
     public void tearDown(ITestResult result) {
 
-        // ❌ Screenshot + FAIL logging ONLY on real failure
+        // Screenshot + FAIL logging ONLY on real failure
         if (test != null && result.getStatus() == ITestResult.FAILURE) {
 
             test.log(Status.FAIL, "Test Failed");
@@ -136,7 +136,7 @@ public class BaseTest {
             driver.quit();
         }
 
-        // 🛑 User requested 2-second delay after every test
+        // User requested 2-second delay after every test
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {

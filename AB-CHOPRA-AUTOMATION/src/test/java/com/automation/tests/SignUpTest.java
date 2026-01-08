@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 public class SignUpTest extends BaseTest {
 
     /**
-     * ✅ SMART NAVIGATION TO SIGN UP PAGE
+     * SMART NAVIGATION TO SIGN UP PAGE
      * Handles different app states:
      * 1. Already on Sign Up page -> Stay there
      * 2. On Sign In page -> Click Sign Up
@@ -81,7 +81,7 @@ public class SignUpTest extends BaseTest {
     }
 
     /**
-     * ✅ NEGATIVE TEST DATA (NO HARDCODED EXPECTED MESSAGES)
+     * NEGATIVE TEST DATA (NO HARDCODED EXPECTED MESSAGES)
      * Test scenarios for Sign Up page validation
      */
     @DataProvider(name = "negativeSignUpData")
@@ -103,7 +103,7 @@ public class SignUpTest extends BaseTest {
     }
 
     /**
-     * ✅ RUNTIME-BASED NEGATIVE TEST FOR SIGN UP
+     * RUNTIME-BASED NEGATIVE TEST FOR SIGN UP
      * 
      * Test Flow:
      * 0. Navigate from Sign In page to Sign Up page
@@ -153,13 +153,13 @@ public class SignUpTest extends BaseTest {
         // Step 6: Wait for validation to appear (if any)
         Thread.sleep(2000); // Allow time for validation to render
 
-        // Step 7: ✅ RUNTIME VALIDATION CHECK (NO HARDCODED MESSAGES)
+        // Step 7: RUNTIME VALIDATION CHECK (NO HARDCODED MESSAGES)
         boolean validationDetected = signUpPage.isAnyValidationVisible();
 
         if (validationDetected) {
-            // ✅ PASS: Validation appeared (negative case handled correctly)
+            // PASS: Validation appeared (negative case handled correctly)
 
-            // 🆕 Capture and log the actual runtime validation message
+            // Capture and log the actual runtime validation message
             String validationMessage = signUpPage.getValidationMessage();
             if (validationMessage != null && !validationMessage.trim().isEmpty()) {
                 test.log(Status.INFO, "📋 Validation message displayed: \"" + validationMessage + "\"");
@@ -168,7 +168,7 @@ public class SignUpTest extends BaseTest {
             test.log(Status.PASS, "✓ Validation detected at runtime - Negative case handled correctly");
             test.log(Status.PASS, "Test PASSED: Application showed validation for invalid input");
         } else {
-            // ❌ FAIL: No validation appeared (security/UX issue)
+            // FAIL: No validation appeared (security/UX issue)
             test.log(Status.FAIL, "✗ NO validation detected at runtime");
             test.log(Status.FAIL, "Test FAILED: Application did not show any validation for invalid input");
             Assert.fail("Expected validation to appear for negative test case, but NONE was detected");
@@ -176,7 +176,7 @@ public class SignUpTest extends BaseTest {
     }
 
     /**
-     * ✅ POSITIVE SIGN UP TEST WITH COMPLETE FLOW
+     * POSITIVE SIGN UP TEST WITH COMPLETE FLOW
      * This test expects successful sign up with full verification flow
      * 
      * Test Flow:

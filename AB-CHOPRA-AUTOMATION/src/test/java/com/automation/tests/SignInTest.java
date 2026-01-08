@@ -19,7 +19,7 @@ import java.time.Duration;
 public class SignInTest extends BaseTest {
 
     /**
-     * ✅ NAVIGATE TO SIGN IN PAGE BEFORE EACH TEST
+     * NAVIGATE TO SIGN IN PAGE BEFORE EACH TEST
      * This ensures every test starts from Sign In page.
      */
     @BeforeMethod
@@ -28,7 +28,7 @@ public class SignInTest extends BaseTest {
     }
 
     /**
-     * ✅ NAVIGATE TO SIGN IN PAGE
+     * NAVIGATE TO SIGN IN PAGE
      * This ensures tests start from Sign In page.
      */
     private void navigateToSignInPage() throws Exception {
@@ -79,7 +79,7 @@ public class SignInTest extends BaseTest {
     }
 
     /**
-     * ✅ NEGATIVE TEST DATA (NO HARDCODED EXPECTED MESSAGES)
+     * NEGATIVE TEST DATA (NO HARDCODED EXPECTED MESSAGES)
      * Only test scenario name, email, and password
      */
     @DataProvider(name = "negativeLoginData")
@@ -96,7 +96,7 @@ public class SignInTest extends BaseTest {
     }
 
     /**
-     * ✅ RUNTIME-BASED NEGATIVE TEST (NO HARDCODED VALIDATION)
+     * RUNTIME-BASED NEGATIVE TEST (NO HARDCODED VALIDATION)
      * 
      * Test Flow:
      * 1. Enter email and password
@@ -123,17 +123,17 @@ public class SignInTest extends BaseTest {
         signInPage.clickContinue();
         test.log(Status.INFO, "Clicked Continue button");
 
-        // Step 3: ✅ Wait for validation to appear using explicit wait (replaces
+        // Step 3: Wait for validation to appear using explicit wait (replaces
         // Thread.sleep)
         signInPage.waitForValidationToAppear(3);
 
-        // Step 4: ✅ RUNTIME VALIDATION CHECK (NO HARDCODED MESSAGES)
+        // Step 4: RUNTIME VALIDATION CHECK (NO HARDCODED MESSAGES)
         boolean validationDetected = signInPage.isAnyValidationVisible();
 
         if (validationDetected) {
-            // ✅ PASS: Validation appeared (negative case handled correctly)
+            // PASS: Validation appeared (negative case handled correctly)
 
-            // 🆕 Capture and log the actual runtime validation message
+            // Capture and log the actual runtime validation message
             String validationMessage = signInPage.getValidationMessage();
             if (validationMessage != null && !validationMessage.trim().isEmpty()) {
                 test.log(Status.INFO, "📋 Validation message displayed: \"" + validationMessage + "\"");
@@ -142,7 +142,7 @@ public class SignInTest extends BaseTest {
             test.log(Status.PASS, "✓ Validation detected at runtime - Negative case handled correctly");
             test.log(Status.PASS, "Test PASSED: Application showed validation for invalid input");
         } else {
-            // ❌ FAIL: No validation appeared (security/UX issue)
+            // FAIL: No validation appeared (security/UX issue)
             test.log(Status.FAIL, "✗ NO validation detected at runtime");
             test.log(Status.FAIL, "Test FAILED: Application did not show any validation for invalid input");
             Assert.fail("Expected validation to appear for negative test case, but NONE was detected");
@@ -150,7 +150,7 @@ public class SignInTest extends BaseTest {
     }
 
     /**
-     * ✅ POSITIVE LOGIN TEST (Optional - for comparison)
+     * POSITIVE LOGIN TEST (Optional - for comparison)
      * This test expects successful login without validation errors
      */
     @Test
@@ -171,17 +171,17 @@ public class SignInTest extends BaseTest {
         signInPage.clickContinue();
         test.log(Status.INFO, "Clicked Continue button");
 
-        // ✅ Wait for navigation to LINK DEVICES page
+        // Wait for navigation to LINK DEVICES page
         // User requested approx 5 sec wait/check for "LINK DEVICES"
         boolean isLinkDevicesPage = signInPage.isLinkDevicesDisplayed();
 
         if (isLinkDevicesPage) {
-            // ✅ PASS: Successfully navigated to Link Devices page
+            // PASS: Successfully navigated to Link Devices page
             test.log(Status.PASS, "✓ 'LINK DEVICES' page displayed - Login successful");
             test.log(Status.PASS, "Test PASSED: Valid credentials accepted and navigated to next screen");
 
             /*
-             * 🆕 AUTO-RESET: Perform Logout
+             * AUTO-RESET: Perform Logout
              * This ensures the app returns to Sign In page for subsequent tests/runs.
              */
             test.log(Status.INFO, "initiating Auto-Reset (Logout)...");
@@ -247,7 +247,7 @@ public class SignInTest extends BaseTest {
             }
 
         } else {
-            // ❌ FAIL: Did not navigate to Link Devices page
+            // FAIL: Did not navigate to Link Devices page
             test.log(Status.FAIL, "✗ Failed to navigate to 'LINK DEVICES' page");
 
             // Check if validation error is present to give more context

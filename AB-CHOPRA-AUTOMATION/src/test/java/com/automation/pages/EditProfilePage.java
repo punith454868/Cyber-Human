@@ -109,7 +109,7 @@ public class EditProfilePage {
     }
 
     /**
-     * ✅ PERFORM DATE SELECTION (SWIPE ACTIONS)
+     * PERFORM DATE SELECTION (SWIPE ACTIONS)
      * Swipes down on Day, Month, and Year SeekBars and clicks Confirm
      * Uses position-based XPath to work with any date (future-proof)
      */
@@ -367,7 +367,7 @@ public class EditProfilePage {
     }
 
     /**
-     * ✅ RUNTIME-BASED VALIDATION DETECTION (NO HARDCODED MESSAGES)
+     * RUNTIME-BASED VALIDATION DETECTION (NO HARDCODED MESSAGES)
      * 
      * Checks at runtime if ANY validation element is visible:
      * - INVALID INPUT Popup (Top Priority)
@@ -381,7 +381,7 @@ public class EditProfilePage {
     public boolean isAnyValidationVisible() {
         WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(3));
 
-        // ✅ Check -1: Success Popup (User requested to treat success as pass)
+        // Check -1: Success Popup (User requested to treat success as pass)
         try {
             WebElement successPopup = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.view.View[@content-desc='Your profile has been updated']")));
@@ -391,7 +391,7 @@ public class EditProfilePage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Check 0: INVALID INPUT Popup (Highest Priority)
+        // Check 0: INVALID INPUT Popup (Highest Priority)
         try {
             WebElement invalidInputPopup = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.view.View[@content-desc='INVALID INPUT']")));
@@ -401,7 +401,7 @@ public class EditProfilePage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Check 1: Validation message via content-desc with error keywords
+        // Check 1: Validation message via content-desc with error keywords
         try {
             WebElement validationView = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath(
@@ -423,7 +423,7 @@ public class EditProfilePage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Check 2: Android Toast Message
+        // Check 2: Android Toast Message
         try {
             WebElement toast = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.widget.Toast[1]")));
@@ -433,7 +433,7 @@ public class EditProfilePage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Check 3: TextView with error keywords
+        // Check 3: TextView with error keywords
         try {
             WebElement errorKeyword = shortWait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.xpath("//android.widget.TextView[" +
@@ -451,7 +451,7 @@ public class EditProfilePage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Check 4: EditText with error attribute
+        // Check 4: EditText with error attribute
         try {
             WebElement editTextError = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.widget.EditText[@error='true']")));
@@ -461,12 +461,12 @@ public class EditProfilePage {
         } catch (Exception ignored) {
         }
 
-        // ❌ No validation detected
+        // No validation detected
         return false;
     }
 
     /**
-     * 🆕 GET ACTUAL RUNTIME VALIDATION MESSAGE
+     * GET ACTUAL RUNTIME VALIDATION MESSAGE
      * 
      * Captures the actual validation message displayed by the app at runtime.
      * 
@@ -482,7 +482,7 @@ public class EditProfilePage {
     public String getValidationMessage() {
         WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(3));
 
-        // ✅ Priority -1: Success Popup
+        // Priority -1: Success Popup
         try {
             WebElement successPopup = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.view.View[@content-desc='Your profile has been updated']")));
@@ -492,7 +492,7 @@ public class EditProfilePage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 0: INVALID INPUT Popup message
+        // Priority 0: INVALID INPUT Popup message
         try {
             WebElement invalidInputPopup = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.view.View[@content-desc='INVALID INPUT']")));
@@ -522,7 +522,7 @@ public class EditProfilePage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 1: Validation message via content-desc with error keywords
+        // Priority 1: Validation message via content-desc with error keywords
         try {
             WebElement validationView = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath(
@@ -544,7 +544,7 @@ public class EditProfilePage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 2: Android Toast Message
+        // Priority 2: Android Toast Message
         try {
             WebElement toast = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.widget.Toast[1]")));
@@ -555,7 +555,7 @@ public class EditProfilePage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 3: TextView with error keywords
+        // Priority 3: TextView with error keywords
         try {
             WebElement errorKeyword = shortWait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.xpath("//android.widget.TextView[" +
@@ -573,7 +573,7 @@ public class EditProfilePage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 4: EditText error attribute
+        // Priority 4: EditText error attribute
         try {
             WebElement editTextError = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.widget.EditText[@error='true']")));
@@ -584,7 +584,7 @@ public class EditProfilePage {
         } catch (Exception ignored) {
         }
 
-        // ❌ No validation message found
+        // No validation message found
         return null;
     }
 

@@ -137,7 +137,7 @@ public class SignUpPage {
     }
 
     /**
-     * 🆕 Click Country dropdown and select Afghanistan (first option)
+     * Click Country dropdown and select Afghanistan (first option)
      * This method clicks the Country button and then selects Afghanistan
      */
     public void selectFirstCountryOption() {
@@ -175,7 +175,7 @@ public class SignUpPage {
     }
 
     /**
-     * 🆕 Click the "SIGN UP" heading
+     * Click the "SIGN UP" heading
      * This is required before clicking Continue button in tests
      */
     public void clickSignUpHeading() {
@@ -189,7 +189,7 @@ public class SignUpPage {
     }
 
     /**
-     * ✅ RUNTIME-BASED VALIDATION DETECTION (NO HARDCODED MESSAGES)
+     * RUNTIME-BASED VALIDATION DETECTION (NO HARDCODED MESSAGES)
      * 
      * Checks at runtime if ANY validation element is visible:
      * - Validation message via content-desc (android.view.View)
@@ -202,7 +202,7 @@ public class SignUpPage {
     public boolean isAnyValidationVisible() {
         WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(3));
 
-        // ✅ Check 1: Validation message via content-desc (android.view.View)
+        // Check 1: Validation message via content-desc (android.view.View)
         // This validation message appears between Confirm Password field and "Already
         // have an account? Sign in" button
         try {
@@ -234,7 +234,7 @@ public class SignUpPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Check 2: Android Toast Message
+        // Check 2: Android Toast Message
         try {
             WebElement toast = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.widget.Toast[1]")));
@@ -244,7 +244,7 @@ public class SignUpPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Check 3: Inline Error Text (TextView with error keywords)
+        // Check 3: Inline Error Text (TextView with error keywords)
         try {
             WebElement errorKeyword = shortWait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.xpath("//android.widget.TextView[" +
@@ -266,7 +266,7 @@ public class SignUpPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Check 4: TextView with error resource-id
+        // Check 4: TextView with error resource-id
         try {
             WebElement errorById = shortWait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.xpath(
@@ -277,7 +277,7 @@ public class SignUpPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Check 5: EditText with error attribute (red error box)
+        // Check 5: EditText with error attribute (red error box)
         try {
             WebElement editTextError = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.widget.EditText[@error='true' or @focused='true']")));
@@ -287,12 +287,12 @@ public class SignUpPage {
         } catch (Exception ignored) {
         }
 
-        // ❌ No validation detected
+        // No validation detected
         return false;
     }
 
     /**
-     * 🆕 GET ACTUAL RUNTIME VALIDATION MESSAGE
+     * GET ACTUAL RUNTIME VALIDATION MESSAGE
      * 
      * Captures the actual validation message displayed by the app at runtime.
      * This method does NOT compare with any expected value - it simply reads
@@ -312,7 +312,7 @@ public class SignUpPage {
     public String getValidationMessage() {
         WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(3));
 
-        // ✅ Priority 1: Validation message via content-desc (android.view.View)
+        // Priority 1: Validation message via content-desc (android.view.View)
         // This validation message appears between Confirm Password field and "Already
         // have an account? Sign in" button
         // Example from XML: <android.view.View content-desc="Invalid email. Please
@@ -348,7 +348,7 @@ public class SignUpPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 2: Android Toast Message
+        // Priority 2: Android Toast Message
         try {
             WebElement toast = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.widget.Toast[1]")));
@@ -359,7 +359,7 @@ public class SignUpPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 3: Any TextView with error keywords
+        // Priority 3: Any TextView with error keywords
         try {
             WebElement errorKeyword = shortWait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.xpath("//android.widget.TextView[" +
@@ -381,7 +381,7 @@ public class SignUpPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 4: TextView with error resource-id
+        // Priority 4: TextView with error resource-id
         try {
             WebElement errorById = shortWait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.xpath(
@@ -393,7 +393,7 @@ public class SignUpPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 5: EditText error attribute
+        // Priority 5: EditText error attribute
         try {
             WebElement editTextError = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.widget.EditText[@error='true']")));
@@ -404,7 +404,7 @@ public class SignUpPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 6: Disabled Continue button (for empty fields)
+        // Priority 6: Disabled Continue button (for empty fields)
         try {
             WebElement btn = findElementWithFallback(null, continueBtnXpath, "CONTINUE");
             if (!btn.isEnabled()) {
@@ -413,7 +413,7 @@ public class SignUpPage {
         } catch (Exception ignored) {
         }
 
-        // ❌ No validation message found
+        // No validation message found
         return null;
     }
 

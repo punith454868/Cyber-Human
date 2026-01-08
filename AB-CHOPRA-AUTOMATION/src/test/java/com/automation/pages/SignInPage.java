@@ -228,7 +228,7 @@ public class SignInPage {
     }
 
     /**
-     * ✅ RUNTIME-BASED VALIDATION DETECTION (NO HARDCODED MESSAGES)
+     * RUNTIME-BASED VALIDATION DETECTION (NO HARDCODED MESSAGES)
      * 
      * Checks at runtime if ANY validation element is visible:
      * - Toast message
@@ -240,7 +240,7 @@ public class SignInPage {
     public boolean isAnyValidationVisible() {
         WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(3));
 
-        // ✅ Check 1: Android Toast Message
+        // Check 1: Android Toast Message
         try {
             WebElement toast = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.widget.Toast[1]")));
@@ -250,7 +250,7 @@ public class SignInPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Check 2: Validation message via content-desc (android.view.View)
+        // Check 2: Validation message via content-desc (android.view.View)
         try {
             WebElement validationView = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.view.View[@content-desc and string-length(@content-desc) > 10]")));
@@ -267,7 +267,7 @@ public class SignInPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Check 3: Inline Error Text (TextView below password or email field)
+        // Check 3: Inline Error Text (TextView below password or email field)
         try {
             WebElement errorText = shortWait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.xpath(
@@ -278,7 +278,7 @@ public class SignInPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Check 4: Any TextView with error keywords (case-insensitive)
+        // Check 4: Any TextView with error keywords (case-insensitive)
         try {
             WebElement errorKeyword = shortWait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.xpath("//android.widget.TextView[" +
@@ -306,7 +306,7 @@ public class SignInPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Check 5: TextView with error resource-id
+        // Check 5: TextView with error resource-id
         try {
             WebElement errorById = shortWait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.xpath(
@@ -317,7 +317,7 @@ public class SignInPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Check 6: EditText with error attribute (red error box)
+        // Check 6: EditText with error attribute (red error box)
         try {
             WebElement editTextError = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.widget.EditText[@error='true' or @focused='true']")));
@@ -327,12 +327,12 @@ public class SignInPage {
         } catch (Exception ignored) {
         }
 
-        // ❌ No validation detected
+        // No validation detected
         return false;
     }
 
     /**
-     * 🆕 GET ACTUAL RUNTIME VALIDATION MESSAGE
+     * GET ACTUAL RUNTIME VALIDATION MESSAGE
      * 
      * Captures the actual validation message displayed by the app at runtime.
      * This method does NOT compare with any expected value - it simply reads
@@ -351,7 +351,7 @@ public class SignInPage {
     public String getValidationMessage() {
         WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(3));
 
-        // ✅ Priority 1: Validation message via content-desc (android.view.View)
+        // Priority 1: Validation message via content-desc (android.view.View)
         // This is the primary validation message location for this app
         try {
             WebElement validationView = shortWait.until(ExpectedConditions.presenceOfElementLocated(
@@ -369,7 +369,7 @@ public class SignInPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 2: Android Toast Message
+        // Priority 2: Android Toast Message
         try {
             WebElement toast = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.widget.Toast[1]")));
@@ -380,7 +380,7 @@ public class SignInPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 3: Inline Error Text (TextView below password field)
+        // Priority 3: Inline Error Text (TextView below password field)
         try {
             WebElement errorText = shortWait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.xpath(
@@ -392,7 +392,7 @@ public class SignInPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 4: Inline Error Text (TextView below email field)
+        // Priority 4: Inline Error Text (TextView below email field)
         try {
             WebElement errorText = shortWait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.xpath(
@@ -404,7 +404,7 @@ public class SignInPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 5: Any TextView with error keywords
+        // Priority 5: Any TextView with error keywords
         try {
             WebElement errorKeyword = shortWait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.xpath("//android.widget.TextView[" +
@@ -431,7 +431,7 @@ public class SignInPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 6: TextView with error resource-id
+        // Priority 6: TextView with error resource-id
         try {
             WebElement errorById = shortWait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.xpath(
@@ -443,7 +443,7 @@ public class SignInPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 7: EditText error attribute
+        // Priority 7: EditText error attribute
         try {
             WebElement editTextError = shortWait.until(ExpectedConditions.presenceOfElementLocated(
                     By.xpath("//android.widget.EditText[@error='true']")));
@@ -454,7 +454,7 @@ public class SignInPage {
         } catch (Exception ignored) {
         }
 
-        // ✅ Priority 8: Disabled Continue button (for empty fields)
+        // Priority 8: Disabled Continue button (for empty fields)
         try {
             WebElement btn = findElementWithFallback(null, continueBtnXpath, "CONTINUE");
             if (!btn.isEnabled()) {
@@ -463,7 +463,7 @@ public class SignInPage {
         } catch (Exception ignored) {
         }
 
-        // ❌ No validation message found
+        // No validation message found
         return null;
     }
 
