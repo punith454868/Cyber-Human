@@ -106,8 +106,32 @@ public class ProfileTest extends BaseTest {
         }
         test.log(Status.PASS, "✓ SEND SAMPLE page is displayed successfully");
 
-        // Step 8: Navigate back to Profile page for next test
-        test.log(Status.INFO, "Step 8: Navigating back to Profile page");
+        // Step 8: Click MAIL SAMPLE
+        test.log(Status.INFO, "Step 8: Clicking MAIL SAMPLE");
+        profilePage.clickMailSample();
+        test.log(Status.PASS, "✓ MAIL SAMPLE clicked");
+        Thread.sleep(1000);
+
+        // Step 9: Click CONFIRM SHIPMENT
+        test.log(Status.INFO, "Step 9: Clicking CONFIRM SHIPMENT");
+        profilePage.clickConfirmShipment();
+        test.log(Status.PASS, "✓ CONFIRM SHIPMENT clicked");
+        Thread.sleep(1000);
+
+        // Step 10: Click RECEIVED AT LAB
+        test.log(Status.INFO, "Step 10: Clicking RECEIVED AT LAB");
+        profilePage.clickReceivedAtLab();
+        test.log(Status.PASS, "✓ RECEIVED AT LAB clicked");
+        Thread.sleep(1000);
+
+        // Step 11: Click REPORT GENERATED
+        test.log(Status.INFO, "Step 11: Clicking REPORT GENERATED");
+        profilePage.clickReportGenerated();
+        test.log(Status.PASS, "✓ REPORT GENERATED clicked");
+        Thread.sleep(1000);
+
+        // Step 12: Navigate back to Profile page for next test
+        test.log(Status.INFO, "Step 12: Navigating back to Profile page");
         profilePage.navigateBackToProfile();
         test.log(Status.PASS, "✓ Navigated back to Profile page");
 
@@ -157,8 +181,20 @@ public class ProfileTest extends BaseTest {
         }
         test.log(Status.PASS, "✓ GETTING STARTED page is displayed");
 
+        // Step 7.2: Click HOW DO I CREATE AN ACCOUNT? FAQ
+        test.log(Status.INFO, "Step 7.2: Clicking HOW DO I CREATE AN ACCOUNT?");
+        profilePage.clickHowToCreateAccount();
+        test.log(Status.PASS, "✓ FAQ clicked");
+        Thread.sleep(1000);
+
+        // Step 7.3: Click DO I NEED TO DOWNLOAD AN APP TO ACCESS MY RESULTS? FAQ
+        test.log(Status.INFO, "Step 7.3: Clicking DO I NEED TO DOWNLOAD AN APP?");
+        profilePage.clickDoINeedApp();
+        test.log(Status.PASS, "✓ FAQ clicked");
+        Thread.sleep(1000);
+
         // Navigate back using Android system back
-        test.log(Status.INFO, "Step 8.1: Navigating back to Help & Support menu");
+        test.log(Status.INFO, "Step 7.4: Navigating back to Help & Support menu");
         profilePage.navigateBack();
         test.log(Status.PASS, "✓ Navigated back to Help & Support menu");
         Thread.sleep(1000);
@@ -187,8 +223,26 @@ public class ProfileTest extends BaseTest {
         }
         test.log(Status.PASS, "✓ DNA KIT page is displayed");
 
+        // Step 7.3: Click HOW LONG DOES IT TAKE TO RECEIVE MY DNA KIT? FAQ
+        test.log(Status.INFO, "Step 7.3: Clicking HOW LONG DOES IT TAKE TO RECEIVE MY DNA KIT?");
+        profilePage.clickHowLongToReceiveKit();
+        test.log(Status.PASS, "✓ FAQ clicked");
+        Thread.sleep(1000);
+
+        // Step 7.4: Click HOW DO I ACTIVATE MY DNA KIT? FAQ
+        test.log(Status.INFO, "Step 7.4: Clicking HOW DO I ACTIVATE MY DNA KIT?");
+        profilePage.clickHowToActivateKit();
+        test.log(Status.PASS, "✓ FAQ clicked");
+        Thread.sleep(1000);
+
+        // Step 7.5: Click WHAT SHOULD I DO IF MY DNA KIT IS DAMAGED OR MISSING? FAQ
+        test.log(Status.INFO, "Step 7.5: Clicking WHAT SHOULD I DO IF MY DNA KIT IS DAMAGED OR MISSING?");
+        profilePage.clickWhatToDoIfKitDamaged();
+        test.log(Status.PASS, "✓ FAQ clicked");
+        Thread.sleep(1000);
+
         // Navigate back using Android system back
-        test.log(Status.INFO, "Step 8.2: Navigating back to Help & Support menu");
+        test.log(Status.INFO, "Step 7.6: Navigating back to Help & Support menu");
         profilePage.navigateBack();
         test.log(Status.PASS, "✓ Navigated back to Help & Support menu");
         Thread.sleep(1000);
@@ -217,8 +271,26 @@ public class ProfileTest extends BaseTest {
         }
         test.log(Status.PASS, "✓ SUBSCRIPTION & BILLING page is displayed");
 
+        // Step 7.7: Click WHAT PAYMENT METHODS ARE ACCEPTED? FAQ
+        test.log(Status.INFO, "Step 7.7: Clicking WHAT PAYMENT METHODS ARE ACCEPTED?");
+        profilePage.clickWhatPaymentMethodsAccepted();
+        test.log(Status.PASS, "✓ FAQ clicked");
+        Thread.sleep(1000);
+
+        // Step 7.8: Click CAN I PAUSE OR CANCEL MY SUBSCRIPTION? FAQ
+        test.log(Status.INFO, "Step 7.8: Clicking CAN I PAUSE OR CANCEL MY SUBSCRIPTION?");
+        profilePage.clickCanIPauseOrCancelSub();
+        test.log(Status.PASS, "✓ FAQ clicked");
+        Thread.sleep(1000);
+
+        // Step 7.9: Click WILL I BE NOTIFIED BEFORE MY SUBSCRIPTION RENEWS? FAQ
+        test.log(Status.INFO, "Step 7.9: Clicking WILL I BE NOTIFIED BEFORE MY SUBSCRIPTION RENEWS?");
+        profilePage.clickWillBeNotifiedBeforeRenewal();
+        test.log(Status.PASS, "✓ FAQ clicked");
+        Thread.sleep(1000);
+
         // Navigate back using Android system back
-        test.log(Status.INFO, "Step 8.3: Navigating back to Help & Support menu");
+        test.log(Status.INFO, "Step 7.10: Navigating back to Help & Support menu");
         profilePage.navigateBack();
         test.log(Status.PASS, "✓ Navigated back to Help & Support menu");
         Thread.sleep(1000);
@@ -247,8 +319,20 @@ public class ProfileTest extends BaseTest {
         }
         test.log(Status.PASS, "✓ TROUBLESHOOTING page is displayed");
 
+        // Step 7.11: Click I CAN’T LOG INTO MY ACCOUNT. WHAT SHOULD I DO? FAQ
+        test.log(Status.INFO, "Step 7.11: Clicking I CAN’T LOG INTO MY ACCOUNT. WHAT SHOULD I DO?");
+        profilePage.clickCantLogIntoAccount();
+        test.log(Status.PASS, "✓ FAQ clicked");
+        Thread.sleep(1000);
+
+        // Step 7.12: Click MY RESULTS ARE DELAYED. HOW CAN I CHECK THE STATUS? FAQ
+        test.log(Status.INFO, "Step 7.12: Clicking MY RESULTS ARE DELAYED. HOW CAN I CHECK THE STATUS?");
+        profilePage.clickResultsDelayed();
+        test.log(Status.PASS, "✓ FAQ clicked");
+        Thread.sleep(1000);
+
         // Navigate back using Android system back
-        test.log(Status.INFO, "Step 8.4: Navigating back to Help & Support menu");
+        test.log(Status.INFO, "Step 7.13: Navigating back to Help & Support menu");
         profilePage.navigateBack();
         test.log(Status.PASS, "✓ Navigated back to Help & Support menu");
         Thread.sleep(1000);

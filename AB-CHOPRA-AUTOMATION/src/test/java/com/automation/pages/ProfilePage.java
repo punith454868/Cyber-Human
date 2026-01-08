@@ -29,12 +29,26 @@ public class ProfilePage {
     // ==================== MY ORDERS LOCATORS ====================
     private final String trackOrderXpath = "//android.view.View[@content-desc='TRACK ORDER']";
     private final String sendSampleXpath = "//android.view.View[@content-desc='SEND SAMPLE']";
+    private final String mailSampleXpath = "//android.widget.ImageView[@content-desc='MAIL SAMPLE']";
+    private final String confirmShipmentXpath = "(//android.widget.ImageView[@content-desc='CONFIRM SHIPMENT'])";
+    private final String receivedAtLabXpath = "(//android.widget.ImageView[@content-desc='RECEIVED AT LAB'])";
+    private final String reportGeneratedXpath = "(//android.widget.ImageView[@content-desc='REPORT GENERATED'])";
 
     // ==================== HELP & SUPPORT LOCATORS ====================
     private final String gettingStartedXpath = "//android.view.View[@content-desc='GETTING STARTED']";
     private final String dnaKitXpath = "//android.view.View[@content-desc='DNA KIT']";
     private final String subscriptionBillingXpath = "//android.view.View[@content-desc='SUBSCRIPTION & BILLING']";
     private final String troubleshootingXpath = "//android.view.View[@content-desc='TROUBLESHOOTING']";
+    private final String howToCreateAccountXpath = "//android.widget.ImageView[@content-desc='HOW DO I CREATE AN ACCOUNT?']";
+    private final String doINeedAppXpath = "(//android.widget.ImageView[@content-desc='DO I NEED TO DOWNLOAD AN APP TO ACCESS MY RESULTS?'])";
+    private final String howLongToReceiveKitXpath = "//android.widget.ImageView[@content-desc='HOW LONG DOES IT TAKE TO RECEIVE MY DNA KIT?']";
+    private final String howToActivateKitXpath = "//android.widget.ImageView[@content-desc='HOW DO I ACTIVATE MY DNA KIT?']";
+    private final String whatToDoIfKitDamagedXpath = "//android.widget.ImageView[@content-desc='WHAT SHOULD I DO IF MY DNA KIT IS DAMAGED OR MISSING?']";
+    private final String whatPaymentMethodsAcceptedXpath = "//android.widget.ImageView[@content-desc='WHAT PAYMENT METHODS ARE ACCEPTED?']";
+    private final String canIPauseOrCancelSubXpath = "//android.widget.ImageView[@content-desc='CAN I PAUSE OR CANCEL MY SUBSCRIPTION?']";
+    private final String willBeNotifiedBeforeRenewalXpath = "//android.widget.ImageView[@content-desc='WILL I BE NOTIFIED BEFORE MY SUBSCRIPTION RENEWS?']";
+    private final String cantLogIntoAccountXpath = "//android.widget.ImageView[@content-desc='I CAN’T LOG INTO MY ACCOUNT. WHAT SHOULD I DO?']";
+    private final String resultsDelayedXpath = "//android.widget.ImageView[@content-desc='MY RESULTS ARE DELAYED. HOW CAN I CHECK THE STATUS?']";
 
     // ==================== LEGAL INFORMATION LOCATORS ====================
     private final String tcXpath = "//android.view.View[@content-desc='T&C']";
@@ -154,6 +168,57 @@ public class ProfilePage {
     }
 
     /**
+     * Click MAIL SAMPLE button
+     */
+    public void clickMailSample() {
+        try {
+            WebElement mailSampleBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(mailSampleXpath)));
+            mailSampleBtn.click();
+        } catch (TimeoutException e) {
+            throw new RuntimeException("MAIL SAMPLE button not found", e);
+        }
+    }
+
+    /**
+     * Click CONFIRM SHIPMENT button
+     */
+    public void clickConfirmShipment() {
+        try {
+            WebElement confirmShipmentBtn = wait
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath(confirmShipmentXpath)));
+            confirmShipmentBtn.click();
+        } catch (TimeoutException e) {
+            throw new RuntimeException("CONFIRM SHIPMENT button not found", e);
+        }
+    }
+
+    /**
+     * Click RECEIVED AT LAB button
+     */
+    public void clickReceivedAtLab() {
+        try {
+            WebElement receivedAtLabBtn = wait
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath(receivedAtLabXpath)));
+            receivedAtLabBtn.click();
+        } catch (TimeoutException e) {
+            throw new RuntimeException("RECEIVED AT LAB button not found", e);
+        }
+    }
+
+    /**
+     * Click REPORT GENERATED button
+     */
+    public void clickReportGenerated() {
+        try {
+            WebElement reportGeneratedBtn = wait
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath(reportGeneratedXpath)));
+            reportGeneratedBtn.click();
+        } catch (TimeoutException e) {
+            throw new RuntimeException("REPORT GENERATED button not found", e);
+        }
+    }
+
+    /**
      * Verify TRACK ORDER page is displayed
      */
     public boolean isTrackOrderPageDisplayed() {
@@ -227,6 +292,134 @@ public class ProfilePage {
             troubleshootingBtn.click();
         } catch (TimeoutException e) {
             throw new RuntimeException("TROUBLESHOOTING option not found", e);
+        }
+    }
+
+    /**
+     * Click HOW DO I CREATE AN ACCOUNT? option
+     */
+    public void clickHowToCreateAccount() {
+        try {
+            WebElement howToBtn = wait
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath(howToCreateAccountXpath)));
+            howToBtn.click();
+        } catch (TimeoutException e) {
+            throw new RuntimeException("HOW DO I CREATE AN ACCOUNT? button not found", e);
+        }
+    }
+
+    /**
+     * Click DO I NEED TO DOWNLOAD AN APP... option
+     */
+    public void clickDoINeedApp() {
+        try {
+            WebElement doINeedAppBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(doINeedAppXpath)));
+            doINeedAppBtn.click();
+        } catch (TimeoutException e) {
+            throw new RuntimeException("DO I NEED TO DOWNLOAD AN APP? button not found", e);
+        }
+    }
+
+    /**
+     * Click HOW LONG DOES IT TAKE TO RECEIVE MY DNA KIT? option
+     */
+    public void clickHowLongToReceiveKit() {
+        try {
+            WebElement howLongBtn = wait
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath(howLongToReceiveKitXpath)));
+            howLongBtn.click();
+        } catch (TimeoutException e) {
+            throw new RuntimeException("HOW LONG TO RECEIVE KIT button not found", e);
+        }
+    }
+
+    /**
+     * Click HOW DO I ACTIVATE MY DNA KIT? option
+     */
+    public void clickHowToActivateKit() {
+        try {
+            WebElement activateBtn = wait
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath(howToActivateKitXpath)));
+            activateBtn.click();
+        } catch (TimeoutException e) {
+            throw new RuntimeException("HOW TO ACTIVATE KIT button not found", e);
+        }
+    }
+
+    /**
+     * Click WHAT SHOULD I DO IF MY DNA KIT IS DAMAGED OR MISSING? option
+     */
+    public void clickWhatToDoIfKitDamaged() {
+        try {
+            WebElement damagedBtn = wait
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath(whatToDoIfKitDamagedXpath)));
+            damagedBtn.click();
+        } catch (TimeoutException e) {
+            throw new RuntimeException("WHAT TO DO IF KIT DAMAGED button not found", e);
+        }
+    }
+
+    /**
+     * Click WHAT PAYMENT METHODS ARE ACCEPTED? option
+     */
+    public void clickWhatPaymentMethodsAccepted() {
+        try {
+            WebElement paymentBtn = wait
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath(whatPaymentMethodsAcceptedXpath)));
+            paymentBtn.click();
+        } catch (TimeoutException e) {
+            throw new RuntimeException("WHAT PAYMENT METHODS ARE ACCEPTED button not found", e);
+        }
+    }
+
+    /**
+     * Click CAN I PAUSE OR CANCEL MY SUBSCRIPTION? option
+     */
+    public void clickCanIPauseOrCancelSub() {
+        try {
+            WebElement pauseBtn = wait
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath(canIPauseOrCancelSubXpath)));
+            pauseBtn.click();
+        } catch (TimeoutException e) {
+            throw new RuntimeException("CAN I PAUSE OR CANCEL SUBSCRIPTION button not found", e);
+        }
+    }
+
+    /**
+     * Click WILL I BE NOTIFIED BEFORE MY SUBSCRIPTION RENEWS? option
+     */
+    public void clickWillBeNotifiedBeforeRenewal() {
+        try {
+            WebElement notifyBtn = wait
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath(willBeNotifiedBeforeRenewalXpath)));
+            notifyBtn.click();
+        } catch (TimeoutException e) {
+            throw new RuntimeException("WILL BE NOTIFIED BEFORE RENEWAL button not found", e);
+        }
+    }
+
+    /**
+     * Click I CAN'T LOG INTO MY ACCOUNT. WHAT SHOULD I DO? option
+     */
+    public void clickCantLogIntoAccount() {
+        try {
+            WebElement cantLogBtn = wait
+                    .until(ExpectedConditions.elementToBeClickable(By.xpath(cantLogIntoAccountXpath)));
+            cantLogBtn.click();
+        } catch (TimeoutException e) {
+            throw new RuntimeException("I CAN'T LOG INTO MY ACCOUNT button not found", e);
+        }
+    }
+
+    /**
+     * Click MY RESULTS ARE DELAYED. HOW CAN I CHECK THE STATUS? option
+     */
+    public void clickResultsDelayed() {
+        try {
+            WebElement delayedBtn = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(resultsDelayedXpath)));
+            delayedBtn.click();
+        } catch (TimeoutException e) {
+            throw new RuntimeException("MY RESULTS ARE DELAYED button not found", e);
         }
     }
 
