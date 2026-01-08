@@ -162,7 +162,7 @@ public class SignInTest extends BaseTest {
 
         // Use valid credentials
         String validEmail = "ramesh@navadhiti.com";
-        String validPassword = "Ramesh@2025";
+        String validPassword = "Testing@2025";
 
         signInPage.enterEmail(validEmail);
         signInPage.enterPassword(validPassword);
